@@ -681,7 +681,7 @@ Kind Regards,
 We have an important update regarding your arrival in Kuşadası to help you beat the crowd, please review the following details:
 
 *ARRIVAL INFO:* Your ship ({{ship}}) is scheduled to dock at {{dock}} at the Kusadasi Cruise Port.
-*MEETING TIME:* Please meet your group *30 to 45 minutes after docking*, between *{{meet_start}} and {{meet_end}}*.
+*MEETING TIME:* Please meet us *30 to 45 minutes after docking*, between *{{meet_start}} and {{meet_end}}*.
 *WHY EARLY:* Meeting earlier allows you to arrive at Ephesus ahead of the large tour groups and avoid the midday heat and crowds.
 *LIVE TRACKING:* Our team monitors your ship via radar and will be ready at the port before you dock.
 📍 {{where}}
@@ -698,7 +698,7 @@ Kind Regards,
 We have an important update regarding your arrival in Kuşadası to help you beat the crowd, please review the following details:
 
 *ARRIVAL INFO:* Your ship ({{ship}}) is scheduled to dock at {{dock}} at the Kusadasi Cruise Port.
-*MEETING TIME:* Please meet your group *30 to 45 minutes after docking*, between *{{meet_start}} and {{meet_end}}*.
+*MEETING TIME:* Please meet us *30 to 45 minutes after docking*, between *{{meet_start}} and {{meet_end}}*.
 *WHY EARLY:* Meeting earlier allows you to arrive at Ephesus ahead of the large tour groups and avoid the midday heat and crowds.
 *LIVE TRACKING:* Our team monitors your ship via radar and will be ready at the port before you dock.
 📍 {{where}}
@@ -813,6 +813,7 @@ function loadStore(){
   if(!result)result={data:deepClone(DEFAULT_DATA),ships:deepClone(DEFAULT_SHIPS),staff:deepClone(DEFAULT_STAFF),settings:deepClone(DEFAULT_SETTINGS),timeAuto:deepClone(DEFAULT_TIMEAUTO)};
   DEFAULT_DATA.filter(dc=>(dc.name||"").indexOf("Personel")>=0).forEach(dc=>{if(!result.data.some(c=>(c.name||"").indexOf("Personel")>=0))result.data.push(deepClone(dc));});
   if(!result.data.some(c=>/Buluşma Detaylar/i.test(c.name||""))){let found=null,fromCat=null;result.data.forEach(c=>c.templates.forEach(t=>{if(/Meeting Details/i.test(t.title||"")){found=t;fromCat=c;}}));if(found&&fromCat){fromCat.templates=fromCat.templates.filter(t=>t!==found);const i=result.data.indexOf(fromCat);result.data.splice(i+1,0,{id:uid(),name:"Buluşma Detayları",en:"Meeting Details",open:true,templates:[found]});}}
+  result.data.forEach(c=>c.templates.forEach(t=>{if(/Scheduled \(Princess\)/i.test(t.title||"")){t.body=(t.body||"").replace(/Please meet your group/g,"Please meet us");}}));
   return result;
 }
 function loadFields(){try{const s=localStorage.getItem(LS_FIELDS);if(s)return JSON.parse(s);}catch(e){}return {};}
