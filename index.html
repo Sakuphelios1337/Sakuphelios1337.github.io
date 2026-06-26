@@ -839,7 +839,7 @@ function resolveField(k){
   if(map[k]!==undefined&&map[k]!==null&&String(map[k]).trim()!=="")return map[k];
   return null;
 }
-function fillBody(b){return b.replace(/\{\{(\w+)\}\}/g,(m,k)=>{const v=resolveField(k);return v!==null?v:m;});}
+function fillBody(b){return b.replace(/\{\{(\w+)\}\}/g,(m,k)=>{const v=resolveField(k);if(v===null)return m;return (k==="dock"||k==="early_dock")&&!/^\s*\*.*\*\s*$/.test(v)?("*"+v+"*"):v;});}
 
 /* ----- time engine ----- */
 function parseTime(str){if(!str)return null;str=String(str);const ap=(str.match(/([ap])\.?m/i)||[])[1];const t=str.match(/(\d{1,2})(?::(\d{2}))?/);if(!t)return null;let h=parseInt(t[1],10),mi=t[2]?parseInt(t[2],10):0;if(h>23||mi>59)return null;if(ap){const low=ap.toLowerCase();if(low==="p"&&h<12)h+=12;if(low==="a"&&h===12)h=0;}return h*60+mi;}
