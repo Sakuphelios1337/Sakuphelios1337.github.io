@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#121833">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Şablon Merkezi">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>Şablon Merkezi · Private &amp; Group Ephesus Tours</title>
+<style>
+  :root{
+    --brand:#283561; --brand-d:#121833; --brand-l:#e9ebf4;
+    --accent:#c8862f; --accent-d:#a06a1f; --accent-l:#f7edda;
+    --gold:#d7a24c; --gold-soft:#e3b35e;
+    --paper:#ffffff; --bg:#eceef4; --ink:#1b2436; --muted:#6b7790; --line:#e4e8f0;
+    --ok:#1f9d6b; --wa:#25d366; --imsg:#0b93f6;
+    --r:12px; --r-sm:9px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);font-size:14.5px;line-height:1.55}
+  .app{display:grid;grid-template-columns:236px 1fr;height:100vh;overflow:hidden}
+
+  /* ---------- RAIL ---------- */
+  .rail{background:#121833;color:#fff;display:flex;flex-direction:column;min-height:0;
+    background-image:radial-gradient(1px 1px at 34px 46px,rgba(227,179,94,.55),transparent),radial-gradient(1px 1px at 150px 30px,rgba(227,179,94,.4),transparent),radial-gradient(1.4px 1.4px at 190px 150px,rgba(227,179,94,.45),transparent),radial-gradient(1px 1px at 60px 230px,rgba(227,179,94,.32),transparent),radial-gradient(1px 1px at 205px 360px,rgba(227,179,94,.3),transparent),radial-gradient(1.3px 1.3px at 30px 470px,rgba(227,179,94,.3),transparent),radial-gradient(1px 1px at 175px 560px,rgba(227,179,94,.26),transparent)}
+  .rail-top{padding:16px 15px 12px;display:flex;align-items:center;gap:10px}
+  .logo-badge{width:44px;height:44px;border-radius:11px;display:flex;align-items:center;justify-content:center;overflow:hidden;flex:0 0 auto}
+  .logo-badge img{width:44px;height:44px;object-fit:contain;display:block}
+  .logo-badge svg{display:block}
+  .brand b{color:#f3e7d0}
+  .brand span{color:var(--gold-soft);opacity:.85;letter-spacing:.3px}
+  .cat-head b{color:rgba(243,231,208,.9)}
+  .rail-search{background:rgba(255,255,255,.08)}
+  .brand b{font-size:13.5px;font-weight:600;letter-spacing:.2px;display:block;line-height:1.2}
+  .brand span{font-size:10.5px;opacity:.7}
+  .rail-search{margin:2px 13px 8px;display:flex;align-items:center;gap:7px;background:rgba(255,255,255,.12);border-radius:18px;padding:7px 12px}
+  .rail-search input{background:transparent;border:0;color:#fff;outline:none;font-size:13px;width:100%}
+  .rail-search input::placeholder{color:rgba(255,255,255,.6)}
+  .rail-list{flex:1;overflow-y:auto;padding:4px 9px 8px}
+  .cat{margin-bottom:2px}
+  .cat-head{display:flex;align-items:center;gap:6px;padding:7px 8px;border-radius:8px;cursor:pointer;color:rgba(255,255,255,.82)}
+  .cat-head:hover{background:rgba(255,255,255,.08)}
+  .cat-head .tw{font-size:10px;width:11px;transition:transform .15s;opacity:.7}
+  .cat-head.collapsed .tw{transform:rotate(-90deg)}
+  .cat-head b{font-size:12px;flex:1;font-weight:600;letter-spacing:.2px}
+  .cat-head .count{font-size:10px;background:rgba(255,255,255,.14);border-radius:9px;padding:1px 7px;opacity:.85}
+  .cat-head .gear{opacity:0;font-size:13px;padding:1px 4px;border-radius:5px}
+  .cat-head:hover .gear{opacity:.7}
+  .cat-head .gear:hover{opacity:1;background:rgba(255,255,255,.15)}
+  .tpl-list{display:flex;flex-direction:column;gap:1px;padding:1px 0 4px 4px}
+  .tpl{padding:7px 9px;border-radius:8px;cursor:pointer;border-left:2px solid transparent}
+  .tpl:hover{background:rgba(255,255,255,.07)}
+  .tpl.active{background:rgba(255,255,255,.14);border-left-color:var(--accent)}
+  .tpl .t{font-size:12.5px;font-weight:500;color:#fff;display:flex;align-items:center;gap:5px;flex-wrap:wrap;line-height:1.25}
+  .tpl .tag{font-size:8.5px;font-weight:600;background:rgba(255,255,255,.15);color:#dfe4f1;border-radius:5px;padding:1px 5px;letter-spacing:.2px}
+  .tpl .cam{font-size:10px;opacity:.8}
+  .rail-foot{display:flex;gap:4px;flex-wrap:wrap;padding:9px 11px;border-top:1px solid rgba(255,255,255,.1)}
+  .rfbtn{background:rgba(255,255,255,.1);color:#fff;border:0;border-radius:7px;padding:6px 9px;font-size:11px;font-weight:500;cursor:pointer;display:inline-flex;align-items:center;gap:4px}
+  .rfbtn:hover{background:rgba(255,255,255,.2)}
+  .rfbtn.add{background:rgba(255,255,255,.06);border:1px dashed rgba(255,255,255,.35)}
+
+  /* ---------- WORKSPACE ---------- */
+  .work{overflow-y:auto;padding:26px 30px}
+  .ws-inner{max-width:760px;margin:0 auto}
+  .ed-empty{margin-top:16vh;text-align:center;color:var(--muted)}
+  .ed-empty .big{font-size:42px;margin-bottom:10px;opacity:.5}
+  .ed-empty b{color:var(--ink);font-weight:600}
+
+  .ed-head{display:flex;align-items:flex-start;gap:12px;margin-bottom:2px}
+  .ed-head h1{font-size:20px;font-weight:600;margin:0;flex:1;letter-spacing:-.2px}
+  .ed-sub{color:var(--muted);font-size:12.5px;margin:0 0 20px}
+
+  .card{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:18px 20px;margin-bottom:16px}
+  .card-lab{display:flex;align-items:center;gap:7px;font-size:11px;font-weight:600;color:var(--muted);letter-spacing:.4px;text-transform:uppercase;margin:0 0 14px}
+  .fgrid{display:grid;grid-template-columns:1fr 1fr;gap:13px 14px}
+  .fld{display:flex;flex-direction:column;gap:5px;min-width:0}
+  .fld.full{grid-column:1 / -1}
+  .fld label{font-size:12px;color:var(--muted);font-weight:500}
+  .fld label .meta{color:var(--brand);font-weight:600;background:var(--brand-l);border-radius:5px;padding:0 6px;font-size:10px;margin-left:4px}
+  .fld input, .fld textarea{border:1px solid var(--line);border-radius:var(--r-sm);padding:10px 12px;font-size:14px;background:#fafbfd;outline:none;font-family:inherit;color:var(--ink);transition:border .15s,box-shadow .15s;width:100%}
+  .fld input:focus{border-color:var(--brand);box-shadow:0 0 0 3px var(--brand-l);background:#fff}
+  .fld input:disabled{background:#eef1f6;color:var(--muted)}
+  .fld .hint2{font-size:11px;color:var(--muted)}
+  .meetrow{display:flex;align-items:center;gap:8px}
+  .meetrow input{width:auto;flex:1}
+  .meetrow .dash{color:var(--muted)}
+  .autochk{display:inline-flex;align-items:center;gap:4px;font-size:12px;color:var(--muted);white-space:nowrap;cursor:pointer}
+  .baserow{font-size:12px;color:var(--muted);margin-top:7px;display:flex;gap:12px;align-items:center}
+  .baserow label{display:inline-flex;align-items:center;gap:4px;cursor:pointer}
+  .ship-mini{background:var(--brand-l);color:var(--brand);border:0;border-radius:6px;padding:3px 8px;font-size:11px;font-weight:600;cursor:pointer;align-self:flex-start}
+  .ship-mini:hover{background:#d8deef}
+  .cal-ships{display:flex;gap:6px;flex-wrap:wrap;align-items:center;min-height:30px}
+  .shipchip{font-size:12px;font-weight:600;background:#fff;border:1px solid var(--brand);color:var(--brand-d);border-radius:16px;padding:5px 11px;cursor:pointer;transition:.12s}
+  .shipchip:hover{background:var(--brand-l)}
+  .shipchip.on{background:var(--brand);color:#fff}
+  .info-chip{display:inline-flex;align-items:center;gap:6px;background:var(--brand-l);color:var(--brand-d);border-radius:8px;padding:8px 11px;font-size:12.5px;font-weight:500;align-self:flex-start}
+
+  .seg-wrap{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .seg{border:1px solid var(--line);background:#fff;color:var(--brand-d);border-radius:8px;padding:7px 13px;font-size:12.5px;font-weight:600;cursor:pointer;transition:.12s}
+  .seg:hover{background:#f3f5fa}
+  .seg.on{background:var(--brand);color:#fff;border-color:var(--brand)}
+
+  /* photo panel */
+  .photo-panel{display:flex;gap:13px;align-items:center;background:#fff;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:var(--r);padding:12px 14px;margin-bottom:16px}
+  .photo-panel img.thumb{width:120px;height:80px;object-fit:cover;border-radius:8px;border:1px solid var(--line);cursor:zoom-in}
+  .pp-step{font-size:10.5px;font-weight:700;color:var(--accent);letter-spacing:.4px}
+  .pp-title{font-size:13.5px;font-weight:600;margin:1px 0 2px}
+  .pp-note{font-size:11.5px;color:var(--muted)}
+  .pp-actions{display:flex;gap:7px;margin-top:8px;flex-wrap:wrap}
+  .photo-empty{display:flex;gap:11px;align-items:center;background:#fff;border:1px dashed var(--accent);border-radius:var(--r);padding:13px;margin-bottom:16px;color:var(--muted);font-size:12.5px}
+
+  /* message */
+  .msg-lab{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--muted);font-weight:600;letter-spacing:.4px;text-transform:uppercase;margin:0 0 7px}
+  textarea.output{width:100%;min-height:260px;resize:vertical;border:1px solid var(--line);border-radius:var(--r);padding:15px 16px;font-size:14px;line-height:1.62;background:#fff;outline:none;color:#1b243d;font-family:inherit}
+  textarea.output:focus{border-color:var(--brand);box-shadow:0 0 0 3px var(--brand-l)}
+  .fmt-bar{display:flex;gap:6px;align-items:center;margin:2px 0 7px;flex-wrap:wrap}
+  .fmt-btn{border:1px solid var(--line);background:#fff;border-radius:8px;padding:5px 11px;font-size:13px;cursor:pointer;color:var(--ink);font-family:inherit;display:inline-flex;align-items:center;gap:5px;transition:background .12s,border-color .12s}
+  .fmt-btn:hover{background:#f3f5fb;border-color:var(--brand)}
+  .fmt-btn .dot{width:10px;height:10px;border-radius:50%;background:#c0392b;display:inline-block}
+  .fmt-hint{font-size:11.5px;color:var(--muted);margin-left:auto}
+  .msg-preview-lab{font-size:11.5px;color:var(--muted);margin:9px 0 3px;text-transform:uppercase;letter-spacing:.04em}
+  .msg-preview{border:1px dashed var(--line);border-radius:10px;padding:12px 14px;background:#fbfcfe;font-size:14px;line-height:1.62;color:#1b243d;margin-top:0;min-height:20px}
+  .msg-preview .rednote,.rednote{color:#c0392b;text-decoration:line-through;text-decoration-color:#c0392b}
+  .hint{font-size:11.5px;color:var(--muted);margin-top:8px}
+  .missing{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:0 0 12px;min-height:2px}
+  .missing .lab{font-size:11.5px;color:var(--muted);font-weight:600}
+  .chip{font-size:11.5px;background:#fbeed6;color:#9a6b16;border:1px solid #f0dcae;border-radius:18px;padding:3px 10px;cursor:pointer;font-weight:600}
+  .chip:hover{background:#f6e3bf}
+
+  /* actions */
+  .send-row{display:flex;flex-direction:column;gap:5px;margin:14px 0 10px}
+  .send-row label{font-size:12px;color:var(--muted);font-weight:500}
+  .send-row input{border:1px solid var(--line);border-radius:var(--r-sm);padding:10px 12px;font-size:14px;background:#fafbfd;outline:none;max-width:280px}
+  .send-row input:focus{border-color:var(--brand);box-shadow:0 0 0 3px var(--brand-l);background:#fff}
+  .staff-pick{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:6px}
+  .actions{display:flex;flex-wrap:wrap;gap:9px;align-items:center}
+  .btn{border:0;border-radius:var(--r-sm);padding:10px 15px;font-size:13px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:7px;transition:.15s;white-space:nowrap;font-family:inherit}
+  .btn.sm{padding:7px 11px;font-size:12px}
+  .btn.primary{background:var(--brand);color:#fff}.btn.primary:hover{background:var(--brand-d)}
+  .btn.accent{background:var(--accent);color:#fff}.btn.accent:hover{background:var(--accent-d)}
+  .btn.ghost{background:#eef1f6;color:var(--ink)}.btn.ghost:hover{background:#e2e7ef}
+  .btn.warn{background:#fff;color:var(--accent-d);border:1px solid #ecc9c1}.btn.warn:hover{background:#fbeae6}
+  .btn .sub{font-weight:500;opacity:.72;font-size:11px}
+  .send-split{position:relative;display:inline-flex}
+  .send-main{background:var(--wa);color:#0a3d20;border-radius:var(--r-sm) 0 0 var(--r-sm);padding:11px 16px;font-size:13.5px;font-weight:700;border:0;cursor:pointer;display:inline-flex;align-items:center;gap:7px}
+  .send-main.imsg{background:var(--imsg);color:#fff}
+  .send-caret{background:var(--wa);color:#0a3d20;border:0;border-left:1px solid rgba(0,0,0,.12);border-radius:0 var(--r-sm) var(--r-sm) 0;padding:11px 11px;cursor:pointer;font-size:12px}
+  .send-caret.imsg{background:var(--imsg);color:#fff}
+  .send-menu{position:absolute;top:calc(100% + 5px);left:0;background:#fff;border:1px solid var(--line);border-radius:var(--r-sm);box-shadow:0 8px 24px rgba(20,30,60,.16);padding:5px;display:none;z-index:20;min-width:170px}
+  .send-menu.show{display:block}
+  .send-menu button{display:flex;align-items:center;gap:8px;width:100%;border:0;background:transparent;padding:9px 11px;border-radius:7px;font-size:13px;cursor:pointer;color:var(--ink);font-weight:500}
+  .send-menu button:hover{background:#f3f5fa}
+
+  /* modal */
+  .overlay{position:fixed;inset:0;background:rgba(16,22,40,.5);display:none;align-items:center;justify-content:center;z-index:80;padding:20px}
+  .overlay.show{display:flex}
+  .modal{background:#fff;border-radius:16px;width:100%;max-width:640px;max-height:92vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+  .modal.wide{max-width:720px}
+  .modal-head{padding:15px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px;position:sticky;top:0;background:#fff;z-index:2}
+  .modal-head h3{margin:0;font-size:16px;flex:1;font-weight:600}
+  .modal-body{padding:17px 20px;display:flex;flex-direction:column;gap:13px}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  label.fl{font-size:11.5px;font-weight:600;color:var(--muted);display:block;margin-bottom:5px}
+  .modal-body input.ti,.modal-body select,.modal-body input[type=text],.modal-body input[type=number]{width:100%;border:1px solid var(--line);border-radius:var(--r-sm);padding:9px 11px;font-size:13.5px;outline:none;font-family:inherit}
+  .modal-body input:focus,.modal-body select:focus{border-color:var(--brand);box-shadow:0 0 0 3px var(--brand-l)}
+  .ph-bar{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:7px}
+  .ph-bar .phb{font-size:11px;background:var(--brand-l);color:var(--brand);border:1px solid #c2cbe4;border-radius:7px;padding:3px 8px;cursor:pointer;font-weight:600}
+  .ph-bar .phb:hover{background:#d8deef}
+  textarea.body-edit{width:100%;min-height:240px;resize:vertical;border:1px solid var(--line);border-radius:10px;padding:13px;font-size:13.5px;line-height:1.6;font-family:inherit;outline:none}
+  textarea.body-edit:focus{border-color:var(--brand);box-shadow:0 0 0 3px var(--brand-l)}
+  .modal-foot{padding:13px 20px;border-top:1px solid var(--line);display:flex;gap:9px;align-items:center;position:sticky;bottom:0;background:#fff}
+  .modal-foot .grow{flex:1}
+  .x{background:#eef1f6;border:0;width:30px;height:30px;border-radius:8px;cursor:pointer;font-size:16px;color:var(--muted)}
+  .x:hover{background:#e2e7ef}
+  .muted-note{font-size:12px;color:var(--muted)}
+  .chkrow{display:flex;align-items:center;gap:8px;font-size:13px;background:#f7f8fb;border:1px solid var(--line);border-radius:var(--r-sm);padding:9px 11px}
+  .img-slot{display:flex;gap:12px;align-items:center}
+  .img-slot img{width:130px;height:86px;object-fit:contain;border-radius:8px;border:1px solid var(--line);background:#f2f4f8}
+  .img-slot .none{width:130px;height:86px;border-radius:8px;border:1px dashed var(--line);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:11px;text-align:center;padding:6px}
+  .swatches{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .swatches input[type=color]{width:42px;height:32px;border:1px solid var(--line);border-radius:7px;background:#fff;cursor:pointer}
+  .ships-table{width:100%;border-collapse:collapse;font-size:13px}
+  .ships-table th{text-align:left;font-size:10.5px;text-transform:uppercase;letter-spacing:.4px;color:var(--muted);padding:5px 6px;border-bottom:1px solid var(--line)}
+  .ships-table td{padding:4px 5px;border-bottom:1px solid #f0f2f7}
+  .ships-table input{width:100%;border:1px solid var(--line);border-radius:7px;padding:6px 7px;font-size:13px;outline:none}
+  .ships-table .del{background:#fbeae6;color:var(--accent-d);border:0;border-radius:6px;width:28px;height:28px;cursor:pointer;font-size:14px}
+  .seg-row-modal{display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:13px}
+
+  .lightbox{position:fixed;inset:0;background:rgba(8,12,24,.86);display:none;align-items:center;justify-content:center;z-index:95;padding:24px;cursor:zoom-out}
+  .lightbox.show{display:flex}
+  .lightbox img{max-width:96%;max-height:96%;border-radius:8px}
+
+  .copied-flag{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:10px 20px;border-radius:24px;font-size:13.5px;font-weight:600;opacity:0;pointer-events:none;transition:.25s;box-shadow:0 8px 24px rgba(0,0,0,.25);z-index:90}
+  .copied-flag.show{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+<div class="app">
+  <!-- RAIL -->
+  <aside class="rail">
+    <div class="rail-top">
+      <div class="logo-badge" id="logoBadge">⚓</div>
+      <div class="brand"><b id="brandName">Private &amp; Group Ephesus Tours</b><span id="brandTag">Şablon Merkezi</span></div>
+    </div>
+    <div class="rail-search"><span style="opacity:.7">🔍</span><input id="search" placeholder="Şablon ara…" autocomplete="off"></div>
+    <div class="rail-list" id="catList"></div>
+    <div class="rail-foot">
+      <button class="rfbtn add" id="btnNewTpl">＋ Şablon</button>
+      <button class="rfbtn add" id="btnNewCat">＋ Kategori</button>
+      <button class="rfbtn" id="btnShips">🚢 Gemiler</button>
+      <button class="rfbtn" id="btnStaff">👥 Personel</button>
+      <button class="rfbtn" id="btnSched">📅 Takvim</button>
+      <button class="rfbtn" id="btnSettings">⚙ Ayarlar</button>
+      <button class="rfbtn" id="btnExport">⬇︎ Yedek</button>
+      <button class="rfbtn" id="btnImport">⬆︎ Yükle</button>
+      <button class="rfbtn" id="btnReset">↺</button>
+      <input type="file" id="importFile" accept="application/json" style="display:none">
+    </div>
+  </aside>
+
+  <!-- WORKSPACE -->
+  <main class="work">
+    <div class="ws-inner">
+      <div class="ed-empty" id="edEmpty">
+        <div id="emptyArt" style="width:112px;height:112px;margin:0 auto 18px"></div>
+        <p><b>Soldan bir şablon seç.</b><br>Her şablon yalnızca o işin alanlarını gösterir.</p>
+      </div>
+      <div id="edContent" style="display:none"></div>
+    </div>
+  </main>
+</div>
+
+<datalist id="shipList"></datalist>
+<div class="copied-flag" id="copiedFlag">Kopyalandı ✓</div>
+<div class="lightbox" id="lightbox"><img id="lightboxImg" alt=""></div>
+
+<!-- TEMPLATE MODAL -->
+<div class="overlay" id="modal">
+  <div class="modal">
+    <div class="modal-head"><h3 id="modalTitle">Şablonu Düzenle</h3><button class="x" id="modalClose">✕</button></div>
+    <div class="modal-body">
+      <div><label class="fl">Başlık · Title</label><input class="ti" id="mTitle"></div>
+      <div class="row2">
+        <div><label class="fl">Kategori · Category</label><select id="mCat"></select></div>
+        <div><label class="fl">Konu (referans) · Subject</label><input type="text" id="mSubject"></div>
+      </div>
+      <div class="chkrow"><input type="checkbox" id="mShowImage"><label for="mShowImage" style="margin:0">📷 Bu şablonda buluşma görselini göster (önce fotoğraf, sonra mesaj)</label></div>
+      <div>
+        <label class="fl">Mesaj metni · Message body</label>
+        <div class="ph-bar" id="phBar"></div>
+        <div class="fmt-bar" style="margin:2px 0 6px">
+          <button type="button" class="fmt-btn" id="mFmtBold"><b>B</b> Kalın</button>
+          <button type="button" class="fmt-btn" id="mFmtNote"><span class="dot"></span> Kırmızı not</button>
+        </div>
+        <textarea class="body-edit" id="mBody"></textarea>
+        <div class="muted-note" style="margin-top:6px">Değişkenler <code>{{...}}</code> · Kalın <code>*metin*</code> · Kırmızı not <code>~~metin~~</code> (gönderilmez)</div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn warn" id="mDelete">🗑 Sil</button><div class="grow"></div>
+      <button class="btn ghost" id="mCancel">Vazgeç</button><button class="btn primary" id="mSave">💾 Kaydet</button>
+    </div>
+  </div>
+</div>
+
+<!-- SETTINGS MODAL -->
+<div class="overlay" id="setModal">
+  <div class="modal wide">
+    <div class="modal-head"><h3>⚙ İşletme Ayarları</h3><button class="x" id="setClose">✕</button></div>
+    <div class="modal-body">
+      <div class="row2">
+        <div><label class="fl">İşletme adı</label><input type="text" id="sCompany"></div>
+        <div><label class="fl">Alt başlık</label><input type="text" id="sTagline"></div>
+      </div>
+      <div class="row2">
+        <div><label class="fl">Varsayılan gönderen</label><input type="text" id="sSender"></div>
+        <div><label class="fl">Web sitesi</label><input type="text" id="sWebsite"></div>
+      </div>
+      <div class="row2">
+        <div><label class="fl">WhatsApp</label><input type="text" id="sWhatsapp"></div>
+        <div><label class="fl">E-posta</label><input type="text" id="sEmail"></div>
+      </div>
+      <div class="row2">
+        <div>
+          <label class="fl">WhatsApp nasıl açılsın?</label>
+          <div class="seg-row-modal"><label><input type="radio" name="waMode" value="web"> Web (web.whatsapp.com)</label><label><input type="radio" name="waMode" value="app"> Uygulama</label></div>
+        </div>
+        <div>
+          <label class="fl">Buluşma gecikmesi (yanaşmadan sonra)</label>
+          <div class="seg-row-modal">+<input type="number" id="sGapStart" style="width:60px;display:inline-block" min="0" max="180"> / +<input type="number" id="sGapEnd" style="width:60px;display:inline-block" min="0" max="180"> dk</div>
+        </div>
+      </div>
+      <div class="row2">
+        <div>
+          <label class="fl">Logo</label>
+          <div class="img-slot"><img id="sLogoPrev" style="display:none" alt="logo"><div class="none" id="sLogoNone">Logo yok</div>
+            <div style="display:flex;flex-direction:column;gap:6px"><button class="btn ghost sm" id="sLogoUp">⬆ Yükle</button><button class="btn warn sm" id="sLogoDel">Kaldır</button></div></div>
+          <input type="file" id="sLogoFile" accept="image/*" style="display:none">
+        </div>
+        <div>
+          <label class="fl">📍 Buluşma noktası görseli</label>
+          <div class="img-slot"><img id="sMeetPrev" style="display:none" alt="meeting"><div class="none" id="sMeetNone">Görsel yok</div>
+            <div style="display:flex;flex-direction:column;gap:6px"><button class="btn ghost sm" id="sMeetUp">⬆ Yükle</button><button class="btn warn sm" id="sMeetDel">Kaldır</button></div></div>
+          <input type="file" id="sMeetFile" accept="image/*" style="display:none">
+        </div>
+      </div>
+      <div>
+        <label class="fl">Marka renkleri</label>
+        <div class="swatches"><span class="muted-note">Ana</span><input type="color" id="sAccent"><span class="muted-note">Vurgu</span><input type="color" id="sAccent2"><button class="btn ghost sm" id="sColorReset">↺ Lacivert / Kırmızı</button></div>
+      </div>
+      <div>
+        <label class="fl">📍 Buluşma yeri metinleri ({{where}})</label>
+        <div class="row2">
+          <div><label class="fl" style="font-weight:600">Çıkış Kapısı (varsayılan)</label><textarea id="sWhereExit" style="width:100%;min-height:90px;border:1px solid var(--line);border-radius:9px;padding:9px;font-size:12.5px;font-family:inherit"></textarea></div>
+          <div><label class="fl" style="font-weight:600">☕ Starbucks</label><textarea id="sWhereStarbucks" style="width:100%;min-height:90px;border:1px solid var(--line);border-radius:9px;padding:9px;font-size:12.5px;font-family:inherit"></textarea></div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-foot"><div class="grow"></div><button class="btn ghost" id="setCancel">Vazgeç</button><button class="btn primary" id="setSave">💾 Kaydet</button></div>
+  </div>
+</div>
+
+<!-- SHIPS MODAL -->
+<div class="overlay" id="shipModal">
+  <div class="modal">
+    <div class="modal-head"><h3>🚢 Gemiler</h3><button class="x" id="shipClose">✕</button></div>
+    <div class="modal-body">
+      <p class="muted-note" style="margin:0">Gemi seç → yanaşma + buluşma otomatik gelsin. Saatleri kendi limanına göre düzenle.</p>
+      <table class="ships-table"><thead><tr><th>Gemi</th><th>Hat</th><th style="width:110px">Yanaşma</th><th style="width:36px"></th></tr></thead><tbody id="shipRows"></tbody></table>
+      <button class="btn ghost sm" id="shipAdd">+ Gemi ekle</button>
+    </div>
+    <div class="modal-foot"><div class="grow"></div><button class="btn ghost" id="shipCancel">Vazgeç</button><button class="btn primary" id="shipSave">💾 Kaydet</button></div>
+  </div>
+</div>
+
+<!-- STAFF MODAL -->
+<div class="overlay" id="staffModal">
+  <div class="modal">
+    <div class="modal-head"><h3>👥 Personel</h3><button class="x" id="staffClose">✕</button></div>
+    <div class="modal-body">
+      <p class="muted-note" style="margin:0">Rehber/şoför listesi. Personel mesajlarında kişiyi seçince telefonu otomatik gelir, tek tık gönderirsin.</p>
+      <table class="ships-table"><thead><tr><th>Ad</th><th>Rol</th><th>Telefon</th><th style="width:64px">Kod</th><th style="width:36px"></th></tr></thead><tbody id="staffRows"></tbody></table>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+        <button class="btn ghost sm" id="staffAdd">+ Personel ekle</button>
+        <button class="btn ghost sm" id="staffVcf">📇 Kişilerden içe aktar (.vcf)</button>
+        <input type="file" id="staffVcfFile" accept=".vcf,text/vcard" style="display:none">
+        <span class="muted-note" id="staffImpStatus"></span>
+      </div>
+      <p class="muted-note" style="margin:0">📇 Telefonunda rehber/şoför kişilerini <b>Kişiler</b> uygulamasından vCard (.vcf) olarak dışa aktar → buraya yükle. Adında "Rehber" / "Şoför" geçenler otomatik eklenir.</p>
+    </div>
+    <div class="modal-foot"><div class="grow"></div><button class="btn ghost" id="staffCancel">Vazgeç</button><button class="btn primary" id="staffSave">💾 Kaydet</button></div>
+  </div>
+</div>
+
+<!-- SCHEDULE IMPORT MODAL -->
+<div class="overlay" id="schedModal">
+  <div class="modal">
+    <div class="modal-head"><h3>📅 Takvimi Güncelle</h3><button class="x" id="schedClose">✕</button></div>
+    <div class="modal-body">
+      <p class="muted-note" style="margin:0">Tura gemi listesi sayfasının metnini kopyalayıp yapıştır (sites.google.com/view/gemilistesi). Sadece <b>KUŞ.</b> seferleri alınır, isimler büyük harfe çevrilir, takvime eklenir.</p>
+      <textarea id="schedPaste" class="body-edit" style="min-height:200px" placeholder="ör.&#10;23 HAZİRAN 2026 SALI - CLB. XCEL - KUŞ. - 07:00 - 18:00"></textarea>
+      <div class="muted-note" id="schedStatus"></div>
+    </div>
+    <div class="modal-foot"><button class="btn warn" id="schedReset">↺ İçe aktarılanı sıfırla</button><div class="grow"></div><button class="btn ghost" id="schedCancel">Vazgeç</button><button class="btn primary" id="schedParse">✓ İşle &amp; Ekle</button></div>
+  </div>
+</div>
+
+<script>
+"use strict";
+
+/* ================= FIELDS ================= */
+const FIELDS = [
+  {key:"name",tr:"Müşteri",en:"Customer",ph:"Ray Wright"},
+  {key:"ship",tr:"Gemi",en:"Ship",ph:"Oosterdam",list:"shipList"},
+  {key:"date",tr:"Tarih",en:"Date",ph:"Jun 27, 2026"},
+  {key:"dock",tr:"Yanaşma saati",en:"Dock time",ph:"9:00 AM"},
+  {key:"early_dock",tr:"Erken yanaşma",en:"Early dock",ph:"8:30 AM"},
+  {key:"meet_start",tr:"Buluşma (baş.)",en:"Meet from",ph:"09:30 AM",auto:true},
+  {key:"meet_end",tr:"Buluşma (bit.)",en:"Meet to",ph:"09:45 AM",auto:true},
+  {key:"sender",tr:"Gönderen",en:"Sender",ph:"Yusuf"},
+  {key:"pickup_time",tr:"Personel saati",en:"Pickup time",ph:"06:45"},
+];
+const FIELD_LABEL={}; FIELDS.forEach(f=>FIELD_LABEL[f.key]=f);
+
+/* ================= DEFAULTS ================= */
+function uid(){return "id"+Math.random().toString(36).slice(2,9);}
+const DEFAULT_SETTINGS = {
+  company:"Private & Group Ephesus Tours",
+  tagline:"IGLESIAS TOUR — Licensed Travel Agency",
+  defaultSender:"Yusuf", website:"privateephesustours.com",
+  whatsapp:"+90 507 563 8413", email:"info@kusadasiporttours.net",
+  logo:null, meetingImage:null, accent:"#283561", accent2:"#c8862f",
+  whatsappMode:"web", sendChannel:"whatsapp",
+  whereExit:`*WHERE TO FIND US:* Our team will be waiting at the *Exit Gate of the Cruise Terminal*, just before the souvenir shops and next to the information desk. Look for our representative holding a sign that says: *"PRIVATE & GROUP EPHESUS TOURS" (attached a picture of it).*`,
+  whereStarbucks:`*WHERE TO FIND US:* Our team will be waiting at the *STARBUCKS in the Cruise Terminal*, holding a sign that says: *"PRIVATE & GROUP EPHESUS TOURS" (attached a picture of it).*`,
+};
+const DEFAULT_TIMEAUTO = {on:true, base:"dock", gapStart:30, gapEnd:45};
+const DEFAULT_SHIPS = [
+  {id:uid(), name:"Oosterdam", line:"Holland America", dock:"7:00 AM"},
+  {id:uid(), name:"Oasis of the Seas", line:"Royal Caribbean", dock:"9:00 AM"},
+];
+const DEFAULT_STAFF = [
+  {id:uid(), name:"Fatma", role:"Rehber", phone:"", code:""},
+  {id:uid(), name:"Sedat", role:"Şoför", phone:"", code:""},
+];
+const SHIP_SCHEDULE_SEED = {
+ "2026-06-01":[["WIND STAR","7:00 AM"],["MSC DIVINA","9:00 AM"]],
+ "2026-06-02":[["CELESTYAL DISCOVERY","7:00 AM"],["CELEBRITY INFINITY","8:00 AM"]],
+ "2026-06-03":[["MSC FANTASIA","7:00 AM"],["ODYSSEY OF THE SEAS","9:00 AM"]],
+ "2026-06-05":[["SEVEN SEAS SPLENDOR","8:00 AM"]],
+ "2026-06-06":[["CELESTYAL DISCOVERY","7:00 AM"],["WIND SPIRIT","8:00 AM"],["BRILLIANCE OF THE SEAS","8:00 AM"],["NORWEGIAN VIVA","1:00 PM"]],
+ "2026-06-07":[["CELESTYAL JOURNEY","8:00 AM"]],
+ "2026-06-08":[["WIND STAR","7:00 AM"],["MSC DIVINA","9:00 AM"],["MARELLA VOYAGER","9:00 AM"]],
+ "2026-06-09":[["EMERALD AZZURRA",""],["CELESTYAL DISCOVERY","7:00 AM"],["CELEBRITY INFINITY","8:00 AM"]],
+ "2026-06-10":[["BRILLIANCE OF THE SEAS","8:00 AM"],["AIDABLU","8:00 AM"],["ODYSSEY OF THE SEAS","9:00 AM"]],
+ "2026-06-12":[["MSC FANTASIA","7:00 AM"]],
+ "2026-06-13":[["ENCHANTED PRINCESS","7:00 AM"],["CELESTYAL DISCOVERY","7:00 AM"]],
+ "2026-06-14":[["WIND SPIRIT","7:00 AM"],["CELESTYAL JOURNEY","8:00 AM"],["MARELLA DISCOVERY","9:00 AM"]],
+ "2026-06-15":[["AZURA",""],["WIND STAR","7:00 AM"],["MSC DIVINA","9:00 AM"]],
+ "2026-06-16":[["CELESTYAL DISCOVERY","7:00 AM"],["CELEBRITY INFINITY","8:00 AM"],["CELEBRITY XCEL","9:00 AM"]],
+ "2026-06-17":[["ODYSSEY OF THE SEAS","9:00 AM"]],
+ "2026-06-18":[["SUN PRINCESS","7:00 AM"],["CELEBRITY ASCENT","8:00 AM"]],
+ "2026-06-20":[["VIKING VESTA",""],["CELESTYAL DISCOVERY","7:00 AM"],["WIND SPIRIT","8:00 AM"],["MSC EXPLORA 2","8:00 AM"],["MARELLA DISCOVERY","8:00 AM"]],
+ "2026-06-21":[["MSC FANTASIA","7:00 AM"],["CELESTYAL JOURNEY","8:00 AM"]],
+ "2026-06-22":[["WIND STAR","7:00 AM"],["MSC DIVINA","9:00 AM"],["MARELLA VOYAGER","9:00 AM"]],
+ "2026-06-23":[["CELESTYAL DISCOVERY","7:00 AM"],["CELEBRITY XCEL","7:00 AM"],["CELEBRITY INFINITY","8:00 AM"]],
+ "2026-06-24":[["ODYSSEY OF THE SEAS","9:00 AM"]],
+ "2026-06-25":[["EMERALD AZZURRA",""],["CELEBRITY EQUINOX","9:00 AM"]],
+ "2026-06-26":[["VIKING VESTA",""],["SEABOURN QUEST","8:00 AM"],["RITZ-CARLTON ILMA","8:00 AM"]],
+ "2026-06-27":[["VIKING SEA","7:00 AM"],["OOSTERDAM","7:00 AM"],["ENCHANTED PRINCESS","7:00 AM"],["CELESTYAL DISCOVERY","7:00 AM"]],
+ "2026-06-28":[["WIND SPIRIT","7:00 AM"],["CELESTYAL JOURNEY","8:00 AM"]],
+ "2026-06-29":[["EMERALD AZZURRA",""],["WIND STAR","7:00 AM"],["SCARLET LADY","8:00 AM"],["LE BOREAL","8:00 AM"],["MSC DIVINA","9:00 AM"]],
+ "2026-06-30":[["MSC FANTASIA","7:00 AM"],["CELESTYAL DISCOVERY","7:00 AM"],["SEVEN SEAS VOYAGER","8:00 AM"],["CELEBRITY INFINITY","8:00 AM"]],
+ "2026-07-01":[["ODYSSEY OF THE SEAS","9:00 AM"]],
+ "2026-07-03":[["VIKING SEA",""]],
+ "2026-07-04":[["CELESTYAL DISCOVERY","7:00 AM"]],
+ "2026-07-05":[["CELESTYAL JOURNEY","8:00 AM"]],
+ "2026-07-06":[["AZURA",""],["WIND STAR","7:00 AM"],["MSC DIVINA","9:00 AM"]],
+ "2026-07-07":[["EMERALD AZZURRA",""],["CELESTYAL DISCOVERY","7:00 AM"],["WORLD TRAVELLER","8:00 AM"],["CELEBRITY INFINITY","8:00 AM"]],
+ "2026-07-08":[["NORWEGIAN VIVA","7:00 AM"],["ODYSSEY OF THE SEAS","9:00 AM"]],
+ "2026-07-09":[["SUN PRINCESS","7:00 AM"],["MSC FANTASIA","7:00 AM"]],
+ "2026-07-10":[["SILVER NOVA","8:00 AM"],["CELEBRITY ASCENT","8:00 AM"],["OCEANIA REGATTA","9:00 AM"]],
+ "2026-07-11":[["ENCHANTED PRINCESS","7:00 AM"],["CELESTYAL DISCOVERY","7:00 AM"],["MSC EXPLORA 2","8:00 AM"],["BRILLIANCE OF THE SEAS","9:00 AM"]],
+ "2026-07-12":[["NATIONAL GEOGRAPHIC ORION",""],["CELESTYAL JOURNEY","8:00 AM"]],
+ "2026-07-13":[["STAR FLYER",""],["WIND STAR","7:00 AM"],["MSC DIVINA","9:00 AM"]],
+ "2026-07-14":[["CELESTYAL DISCOVERY","7:00 AM"],["CELEBRITY INFINITY","8:00 AM"],["AZAMARA ONWARD","9:00 AM"],["NORWEGIAN VIVA","1:00 PM"]],
+ "2026-07-15":[["ODYSSEY OF THE SEAS","9:00 AM"]],
+ "2026-07-16":[["WORLD TRAVELLER","8:00 AM"],["CELEBRITY XCEL","8:00 AM"]],
+ "2026-07-18":[["OOSTERDAM","7:00 AM"],["MSC FANTASIA","7:00 AM"],["CELESTYAL DISCOVERY","7:00 AM"]],
+ "2026-07-19":[["OCEANIA ALLURA","7:00 AM"],["CELESTYAL JOURNEY","8:00 AM"],["MARELLA DISCOVERY","9:00 AM"]],
+ "2026-07-20":[["MSC DIVINA","9:00 AM"]],
+ "2026-07-21":[["EMERALD AZZURRA",""],["CELESTYAL DISCOVERY","7:00 AM"],["CELEBRITY XCEL","7:00 AM"]],
+ "2026-07-22":[["NATIONAL GEOGRAPHIC ORION",""],["SEABOURN QUEST","8:00 AM"],["BRILLIANCE OF THE SEAS","8:00 AM"],["ODYSSEY OF THE SEAS","9:00 AM"]],
+ "2026-07-23":[["CELEBRITY INFINITY","8:00 AM"]],
+ "2026-07-24":[["SILVER NOVA","8:00 AM"]],
+ "2026-07-25":[["ENCHANTED PRINCESS","7:00 AM"],["CELESTYAL DISCOVERY","7:00 AM"]],
+ "2026-07-26":[["CELESTYAL JOURNEY","8:00 AM"]],
+ "2026-07-27":[["MSC DIVINA","9:00 AM"]],
+ "2026-07-28":[["CELESTYAL DISCOVERY","7:00 AM"],["CELEBRITY INFINITY","8:00 AM"]],
+ "2026-07-29":[["NORWEGIAN VIVA","7:00 AM"],["ODYSSEY OF THE SEAS","9:00 AM"]],
+ "2026-07-30":[["SUN PRINCESS","7:00 AM"]],
+ "2026-07-31":[["CELEBRITY ASCENT","8:00 AM"]],
+ "2026-08-01":[["CELESTYAL DISCOVERY","7:00 AM"],["MSC EXPLORA 2","8:00 AM"],["NORWEGIAN VIVA","1:00 PM"]],
+ "2026-08-03":[["STAR FLYER",""],["WIND STAR","7:00 AM"],["MSC DIVINA","9:00 AM"],["AZAMARA ONWARD","9:00 AM"]],
+ "2026-08-04":[["EMERALD AZZURRA",""],["CELESTYAL DISCOVERY","7:00 AM"],["MARELLA VOYAGER","8:00 AM"],["CELEBRITY INFINITY","8:00 AM"]],
+ "2026-08-05":[["OCEANIA REGATTA","7:00 AM"],["MSC FANTASIA","7:00 AM"],["ODYSSEY OF THE SEAS","9:00 AM"]],
+ "2026-08-07":[["SEVEN SEAS SPLENDOR","8:00 AM"]],
+ "2026-08-08":[["CELESTYAL DISCOVERY","7:00 AM"],["MARELLA DISCOVERY","8:00 AM"]],
+ "2026-08-09":[["CELESTYAL JOURNEY","8:00 AM"]],
+ "2026-08-10":[["WIND STAR","7:00 AM"],["AROYA MANARA","8:00 AM"],["MSC DIVINA","9:00 AM"]],
+ "2026-08-11":[["CELESTYAL DISCOVERY","7:00 AM"],["CELEBRITY INFINITY","8:00 AM"]],
+ "2026-08-12":[["ODYSSEY OF THE SEAS","9:00 AM"]],
+ "2026-08-13":[["EMERALD AZZURRA",""],["CELEBRITY XCEL","8:00 AM"]],
+ "2026-08-14":[["MSC FANTASIA","7:00 AM"],["SILVER NOVA","8:00 AM"]],
+ "2026-08-15":[["VIKING VESTA",""],["CELESTYAL DISCOVERY","7:00 AM"]],
+ "2026-08-16":[["MARELLA DISCOVERY","9:00 AM"]],
+ "2026-08-17":[["AZURA",""],["WIND STAR","7:00 AM"],["MSC DIVINA","9:00 AM"]],
+ "2026-08-18":[["CELESTYAL DISCOVERY","7:00 AM"],["CELEBRITY XCEL","8:00 AM"],["CELEBRITY INFINITY","8:00 AM"]],
+ "2026-08-19":[["ODYSSEY OF THE SEAS","9:00 AM"]],
+ "2026-08-20":[["SUN PRINCESS","7:00 AM"],["CELEBRITY ASCENT","8:00 AM"]],
+ "2026-08-21":[["VIKING VESTA",""],["CELEBRITY EQUINOX","8:00 AM"]],
+ "2026-08-22":[["VIKING SEA",""],["ENCHANTED PRINCESS","7:00 AM"],["CELESTYAL DISCOVERY","7:00 AM"],["BRILLIANCE OF THE SEAS","9:00 AM"]],
+ "2026-08-23":[["MSC FANTASIA","7:00 AM"],["CELESTYAL JOURNEY","8:00 AM"]],
+ "2026-08-24":[["STAR FLYER",""],["WIND STAR","7:00 AM"],["OCEANIA REGATTA","7:00 AM"],["MSC DIVINA","9:00 AM"]],
+ "2026-08-25":[["CELESTYAL DISCOVERY","7:00 AM"],["OCEANIA SIRENA","8:00 AM"],["CELEBRITY INFINITY","8:00 AM"]],
+ "2026-08-26":[["ODYSSEY OF THE SEAS","9:00 AM"]],
+ "2026-08-28":[["VIKING SEA",""],["SILVER NOVA","8:00 AM"]],
+ "2026-08-29":[["CELESTYAL DISCOVERY","7:00 AM"],["BRILLIANCE OF THE SEAS","8:00 AM"]],
+ "2026-08-31":[["WIND STAR","7:00 AM"],["MSC DIVINA","9:00 AM"],["MARELLA VOYAGER","9:00 AM"]],
+ "2026-09-01":[["EMERALD AZZURRA",""],["MSC FANTASIA","7:00 AM"],["CELESTYAL DISCOVERY","7:00 AM"],["CELEBRITY INFINITY","8:00 AM"]],
+ "2026-09-02":[["BRILLIANCE OF THE SEAS","8:00 AM"],["AIDABLU","8:00 AM"],["ODYSSEY OF THE SEAS","9:00 AM"]],
+ "2026-09-04":[["NORWEGIAN VIVA","7:00 AM"]],
+ "2026-09-05":[["ENCHANTED PRINCESS","7:00 AM"]],
+ "2026-09-06":[["WIND SPIRIT","7:00 AM"],["CELESTYAL JOURNEY","8:00 AM"]],
+ "2026-09-07":[["WIND STAR","7:00 AM"],["MSC DIVINA","9:00 AM"]],
+ "2026-09-08":[["NORWEGIAN VIVA","1:00 PM"]],
+ "2026-09-09":[["CELEBRITY XCEL","8:00 AM"],["ODYSSEY OF THE SEAS","9:00 AM"]],
+ "2026-09-10":[["SUN PRINCESS","7:00 AM"],["MSC FANTASIA","7:00 AM"],["SILVER NOVA","9:00 AM"]],
+ "2026-09-11":[["CELEBRITY ASCENT","8:00 AM"]],
+ "2026-09-12":[["NATIONAL GEOGRAPHIC ORION",""],["CELESTYAL DISCOVERY","7:00 AM"],["MSC EXPLORA 2","8:00 AM"]],
+ "2026-09-13":[["CELESTYAL JOURNEY","8:00 AM"],["CELEBRITY INFINITY","8:00 AM"],["MARELLA DISCOVERY","9:00 AM"],["AZAMARA ONWARD","9:00 AM"]],
+ "2026-09-14":[["STAR FLYER",""],["WIND STAR","7:00 AM"],["MSC DIVINA","9:00 AM"],["CARNIVAL LEGEND","9:00 AM"]],
+ "2026-09-15":[["EMERALD AZZURRA",""],["CELESTYAL DISCOVERY","7:00 AM"],["CELEBRITY XCEL","8:00 AM"]],
+ "2026-09-16":[["CELEBRITY ECLIPSE","8:00 AM"],["ODYSSEY OF THE SEAS","9:00 AM"]],
+ "2026-09-17":[["CELEBRITY EQUINOX","9:00 AM"]],
+ "2026-09-18":[["DOUGLAS MAWSON",""],["SEABOURN QUEST","8:00 AM"]],
+ "2026-09-19":[["MSC FANTASIA","7:00 AM"],["EUROPA 2","8:00 AM"],["MARELLA DISCOVERY","8:00 AM"]],
+ "2026-09-20":[["WIND SPIRIT","7:00 AM"],["CELESTYAL JOURNEY","8:00 AM"],["CELEBRITY INFINITY","8:00 AM"]],
+ "2026-09-21":[["WIND STAR","7:00 AM"],["RITZ-CARLTON EVRIMA","8:00 AM"],["SILVER NOVA","9:00 AM"],["MSC DIVINA","9:00 AM"]],
+ "2026-09-22":[["NATIONAL GEOGRAPHIC ORION",""],["CELESTYAL DISCOVERY","7:00 AM"],["CELEBRITY ECLIPSE","9:00 AM"]],
+ "2026-09-23":[["SEADREAM I",""],["CARNIVAL LEGEND","7:00 AM"],["OCEANIA ALLURA","8:00 AM"],["ODYSSEY OF THE SEAS","9:00 AM"],["AIDABLU","10:00 AM"]],
+ "2026-09-24":[["AURORA",""],["NORWEGIAN VIVA","7:00 AM"],["OCEANIA NAUTICA","8:00 AM"]],
+ "2026-09-25":[["QUEEN VICTORIA",""]],
+ "2026-09-26":[["CELESTYAL DISCOVERY","7:00 AM"],["STAR LEGEND","10:00 AM"]],
+ "2026-09-27":[["ENCHANTED PRINCESS","7:00 AM"],["CELESTYAL JOURNEY","8:00 AM"],["NORWEGIAN VIVA","1:00 PM"]],
+ "2026-09-28":[["WIND STAR","7:00 AM"],["MSC DIVINA","9:00 AM"],["MARELLA VOYAGER","9:00 AM"]],
+ "2026-09-29":[["SEADREAM I",""],["OOSTERDAM","7:00 AM"],["CELESTYAL DISCOVERY","7:00 AM"],["WIND SPIRIT","8:00 AM"],["CELEBRITY INFINITY","8:00 AM"]],
+ "2026-09-30":[["SEVEN SEAS NAVIGATOR","7:00 AM"],["ODYSSEY OF THE SEAS","9:00 AM"]],
+ "2026-10-01":[["SUN PRINCESS","7:00 AM"]],
+ "2026-10-02":[["CELEBRITY ASCENT","8:00 AM"]],
+ "2026-10-03":[["WIND SPIRIT","7:00 AM"],["CELESTYAL DISCOVERY","7:00 AM"],["MSC EXPLORA 2","8:00 AM"],["BRILLIANCE OF THE SEAS","9:00 AM"]],
+ "2026-10-04":[["CELESTYAL JOURNEY","8:00 AM"],["CFC RENAISSANCE","9:00 AM"],["STAR LEGEND","10:00 AM"]],
+ "2026-10-05":[["WIND STAR","7:00 AM"],["MSC DIVINA","9:00 AM"]],
+ "2026-10-06":[["CELESTYAL DISCOVERY","7:00 AM"]],
+ "2026-10-07":[["MSC FANTASIA","7:00 AM"],["ODYSSEY OF THE SEAS","9:00 AM"]],
+ "2026-10-08":[["EMERALD AZZURRA",""]],
+ "2026-10-09":[["SILVER NOVA","8:00 AM"]],
+ "2026-10-10":[["CELESTYAL DISCOVERY","7:00 AM"]],
+ "2026-10-11":[["CELESTYAL JOURNEY","8:00 AM"],["CELEBRITY INFINITY","8:00 AM"],["MARELLA DISCOVERY","9:00 AM"]],
+ "2026-10-12":[["ARCADIA",""],["WIND STAR","7:00 AM"],["MSC DIVINA","9:00 AM"]],
+ "2026-10-13":[["OOSTERDAM","7:00 AM"],["CELESTYAL DISCOVERY","7:00 AM"],["CELEBRITY ECLIPSE","9:00 AM"]],
+ "2026-10-14":[["CARNIVAL LEGEND","7:00 AM"],["AZAMARA ONWARD","8:00 AM"],["AIDABLU","10:00 AM"]],
+ "2026-10-15":[["SEABOURN QUEST","8:00 AM"]],
+ "2026-10-16":[["MSC FANTASIA","7:00 AM"],["SILVER NOVA","8:00 AM"],["STAR LEGEND","9:00 AM"]],
+ "2026-10-17":[["ENCHANTED PRINCESS","7:00 AM"],["CELESTYAL DISCOVERY","7:00 AM"],["SEVEN SEAS MARINER","8:00 AM"],["MARELLA DISCOVERY","8:00 AM"]],
+ "2026-10-18":[["VIKING SKY",""],["EUROPA","8:00 AM"],["CELEBRITY INFINITY","8:00 AM"]],
+ "2026-10-19":[["MSC DIVINA","9:00 AM"]],
+ "2026-10-20":[["OOSTERDAM","7:00 AM"],["CELESTYAL DISCOVERY","7:00 AM"]],
+ "2026-10-22":[["VIKING NEPTUNE",""],["SUN PRINCESS","7:00 AM"],["STAR LEGEND","8:00 AM"],["CELEBRITY ASCENT","8:00 AM"]],
+ "2026-10-23":[["ARTANIA","8:00 AM"]],
+ "2026-10-24":[["VIKING SKY",""],["CELESTYAL DISCOVERY","7:00 AM"]],
+ "2026-10-25":[["MSC FANTASIA","7:00 AM"],["CELESTYAL JOURNEY","8:00 AM"]],
+ "2026-10-26":[["MSC DIVINA","9:00 AM"],["MARELLA VOYAGER","9:00 AM"]],
+ "2026-10-27":[["CELESTYAL DISCOVERY","7:00 AM"],["CELEBRITY INFINITY","8:00 AM"]],
+ "2026-10-28":[["AZAMARA QUEST","8:00 AM"]],
+ "2026-10-29":[["SILVER NOVA","8:00 AM"]],
+ "2026-10-30":[["VIKING JUPITER",""],["ENCHANTED PRINCESS","8:00 AM"],["SEVEN SEAS GRANDEUR","10:00 AM"]],
+ "2026-10-31":[["CELESTYAL DISCOVERY","7:00 AM"]],
+ "2026-11-01":[["ISLAND PRINCESS","9:00 AM"]],
+ "2026-11-03":[["VOLENDAM","7:00 AM"],["MSC FANTASIA","7:00 AM"],["CELESTYAL DISCOVERY","7:00 AM"]],
+ "2026-11-05":[["VIKING STAR",""]],
+ "2026-11-07":[["CELESTYAL DISCOVERY","7:00 AM"]],
+ "2026-11-08":[["VIKING VELA",""],["MSC EXPLORA 2","8:00 AM"],["CELESTYAL JOURNEY","8:00 AM"]],
+ "2026-11-10":[["CELESTYAL DISCOVERY","7:00 AM"]],
+ "2026-11-11":[["VIKING STAR",""]],
+ "2026-11-12":[["VIKING SATURN",""],["MSC FANTASIA","7:00 AM"]],
+ "2026-11-14":[["ENCHANTED PRINCESS","7:00 AM"],["CELESTYAL DISCOVERY","7:00 AM"]],
+ "2026-11-15":[["VIKING VELA",""]],
+ "2026-11-17":[["VIKING STAR",""],["CELESTYAL DISCOVERY","7:00 AM"]],
+ "2026-11-18":[["VIKING SATURN",""]],
+ "2026-11-21":[["ARCADIA",""],["CELESTYAL DISCOVERY","7:00 AM"],["MSC EXPLORA 2","8:00 AM"]],
+ "2026-11-23":[["VIKING STAR",""],["SEVEN SEAS VOYAGER","8:00 AM"]],
+ "2026-11-24":[["VIKING SATURN",""]],
+ "2026-11-25":[["VIKING VELA",""]],
+ "2026-11-30":[["VIKING SATURN",""]],
+ "2026-12-02":[["VIKING VELA",""]],
+ "2026-12-06":[["VIKING VESTA",""]],
+ "2026-12-07":[["VIKING MIRA",""]],
+ "2026-12-08":[["VIKING LIBRA",""]],
+ "2026-12-11":[["VIKING MIRA",""]],
+ "2026-12-12":[["VIKING VESTA",""]],
+ "2026-12-13":[["VIKING NEPTUNE",""]],
+ "2026-12-15":[["VIKING LIBRA",""]],
+ "2026-12-17":[["VIKING STAR",""]],
+ "2026-12-18":[["VIKING VESTA",""]],
+ "2026-12-19":[["VIKING NEPTUNE",""]],
+ "2026-12-25":[["VIKING NEPTUNE",""]],
+ "2026-12-31":[["VIKING NEPTUNE",""]]
+};
+
+const DEFAULT_DATA = [
+  {id:uid(), name:"Rezervasyon", en:"Booking", open:true, templates:[
+    {id:uid(), title:"Booking Confirmation", tag:"E-MAIL", subject:"Your Ephesus Tour — Booking Confirmation", showImage:false, body:
+`Dear {{name}},
+
+Many thanks for your kind interest in this amazing Tour!
+
+We're happy to confirm that we secured your place on Ephesus Tour on {{date}}.
+
+Please type us your E-MAIL ADDRESS and CRUISE SHIP NAME.
+
+So, we can send you the meeting time & place, and other relevant tour details.
+
+Waiting to hear from you, have a great day!
+
+Kind Regards,
+{{sender}}`},
+  ]},
+  {id:uid(), name:"Tur Öncesi Bilgilendirme", en:"Pre-Tour Info", open:true, templates:[
+    {id:uid(), title:"Group Tour – Ticket Included", tag:"GRUP · DAHİL", subject:"Reminder — Your Upcoming Ephesus Tour", showImage:true, body:
+`*REMINDER FOR YOUR UPCOMING EPHESUS TOUR*
+
+We are excited to welcome you to Kuşadası/Ephesus! To ensure a smooth start to your day, please review the following details:
+
+*ARRIVAL INFO:* Your ship ({{ship}}) is scheduled to dock at {{dock}} at the Kusadasi Cruise Port.
+*MEETING TIME:* Please meet your group *30 to 45 minutes after docking*, between *{{meet_start}} and {{meet_end}}*.
+*PUNCTUALITY:* The group will depart at the scheduled time. To avoid a "no-show" status, please ensure you are ready on time.
+*LIVE TRACKING:* Our team monitors your ship via radar and will be ready at the port before you dock.
+
+📍 {{where}}
+
+📢 *IMPORTANT NOTE:*
+Please have your e-ticket ready with you (printed or on your phone) to review your tour schedule and inclusions.
+Wishing you a fantastic day in Ephesus!
+
+Regards,
+{{sender}}`},
+    {id:uid(), title:"Group Tour – Ticket Excluded", tag:"GRUP · HARİÇ", subject:"Reminder — Your Upcoming Ephesus Tour", showImage:true, body:
+`*REMINDER FOR YOUR UPCOMING EPHESUS TOUR*
+
+We are excited to welcome you to Kuşadası/Ephesus! To ensure a smooth start to your day, please review the following details:
+
+*ARRIVAL INFO:* Your ship ({{ship}}) is scheduled to dock at {{dock}} at the Kusadasi Cruise Port.
+*MEETING TIME:* Please meet your group *30 to 45 minutes after docking*, between *{{meet_start}} and {{meet_end}}*.
+*PUNCTUALITY:* The group will depart at the scheduled time. To avoid a "no-show" status, please ensure you are ready on time.
+*LIVE TRACKING:* Our team monitors your ship via radar and will be ready at the port before you dock.
+
+📍 {{where}}
+📢 *IMPORTANT NOTE*
+- *CASH RECOMMENDED:* Museum entrance tickets are at your own expense. We strongly suggest bringing cash (approx. 40 to 60 USD/EUR per person).
+- *SKIP-THE-LINE:* Having cash allows us to provide you with pre-purchased skip-the-line tickets, saving you significant time at the gate.
+- *E-TICKET:* Please keep your booking e-ticket handy to verify tour details.
+Wishing you a great day!
+Kind Regards,
+{{sender}}`},
+    {id:uid(), title:"Private Tour – Ticket Included · Early dock (RCCL)", tag:"PRIVATE·DAHİL·ERKEN", subject:"Update & Reminder — Your Ephesus Tour", showImage:true, body:
+`*UPDATE & REMINDER FOR YOUR UPCOMING EPHESUS TOUR*
+
+We have an important update regarding your arrival in Kuşadası to help you beat the crowd, please review the following details:
+
+*ARRIVAL INFO:* Although the official schedule says {{dock}}, the Captain has informed us that the ship will likely dock earlier, around {{early_dock}}.
+*APP-NOTICE:* Please note that the RCCL app or guest services may still show {{dock}} as scheduled time, but we will be there for the earlier docking.
+*MEETING TIME:* Please meet us *30 to 45 minutes after docking*, between *{{meet_start}} and {{meet_end}}*.
+*WHY EARLY:* Meeting earlier allows you to arrive at Ephesus ahead of the large tour groups and avoid the midday heat and crowds.
+*LIVE TRACKING:* Our team monitors your ship via radar and will be ready at the port before you dock.
+📍 {{where}}
+📢 *IMPORTANT NOTE:*
+Please have your e-ticket ready with you (printed or on your phone) to review your tour schedule and inclusions.
+
+Wishing you a great day!
+
+Kind Regards,
+{{sender}}`},
+    {id:uid(), title:"Private Tour – Ticket Excluded · Early dock (RCCL)", tag:"PRIVATE·HARİÇ·ERKEN", subject:"Update & Reminder — Your Ephesus Tour", showImage:true, body:
+`*UPDATE & REMINDER FOR YOUR UPCOMING EPHESUS TOUR*
+
+We have an important update regarding your arrival in Kuşadası to help you beat the crowd, please review the following details:
+
+*ARRIVAL INFO:* Although the official schedule says {{dock}}, the Captain has informed us that the ship will likely dock earlier, around {{early_dock}}.
+*APP-NOTICE:* Please note that the RCCL app or guest services may still show {{dock}} as scheduled time, but we will be there for the earlier docking.
+*MEETING TIME:* Please meet us *30 to 45 minutes after docking*, between *{{meet_start}} and {{meet_end}}*.
+*WHY EARLY:* Meeting earlier allows you to arrive at Ephesus ahead of the large tour groups and avoid the midday heat and crowds.
+*LIVE TRACKING:* Our team monitors your ship via radar and will be ready at the port before you dock.
+📍 {{where}}
+📢 *IMPORTANT NOTE:*
+- *CASH RECOMMENDED:* Museum entrance tickets are at your own expense. We strongly suggest bringing cash (approx. 40 to 60 USD/EUR per person).
+- *SKIP-THE-LINE:* Having cash allows us to provide you with pre-purchased skip-the-line tickets, saving you significant time at the gate.
+- *E-TICKET:* Please keep your booking e-ticket handy to verify tour details.
+
+Wishing you a great day!
+
+Kind Regards,
+{{sender}}`},
+    {id:uid(), title:"Private Tour – Ticket Included · Scheduled (Princess)", tag:"PRIVATE·DAHİL·NORMAL", subject:"Update & Reminder — Your Ephesus Tour", showImage:true, body:
+`*UPDATE & REMINDER FOR YOUR UPCOMING EPHESUS TOUR*
+
+We have an important update regarding your arrival in Kuşadası to help you beat the crowd, please review the following details:
+
+*ARRIVAL INFO:* Your ship ({{ship}}) is scheduled to dock at {{dock}} at the Kusadasi Cruise Port.
+*MEETING TIME:* Please meet your group *30 to 45 minutes after docking*, between *{{meet_start}} and {{meet_end}}*.
+*WHY EARLY:* Meeting earlier allows you to arrive at Ephesus ahead of the large tour groups and avoid the midday heat and crowds.
+*LIVE TRACKING:* Our team monitors your ship via radar and will be ready at the port before you dock.
+📍 {{where}}
+📢 *IMPORTANT NOTE:*
+Please have your e-ticket ready with you (printed or on your phone) to review your tour schedule and inclusions.
+
+Wishing you a great day!
+
+Kind Regards,
+{{sender}}`},
+    {id:uid(), title:"Private Tour – Ticket Excluded · Scheduled (Princess)", tag:"PRIVATE·HARİÇ·NORMAL", subject:"Update & Reminder — Your Ephesus Tour", showImage:true, body:
+`*UPDATE & REMINDER FOR YOUR UPCOMING EPHESUS TOUR*
+
+We have an important update regarding your arrival in Kuşadası to help you beat the crowd, please review the following details:
+
+*ARRIVAL INFO:* Your ship ({{ship}}) is scheduled to dock at {{dock}} at the Kusadasi Cruise Port.
+*MEETING TIME:* Please meet your group *30 to 45 minutes after docking*, between *{{meet_start}} and {{meet_end}}*.
+*WHY EARLY:* Meeting earlier allows you to arrive at Ephesus ahead of the large tour groups and avoid the midday heat and crowds.
+*LIVE TRACKING:* Our team monitors your ship via radar and will be ready at the port before you dock.
+📍 {{where}}
+📢 *IMPORTANT NOTE:*
+- *CASH RECOMMENDED:* Museum entrance tickets are at your own expense. We strongly suggest bringing cash (approx. 40 to 60 USD/EUR per person).
+- *SKIP-THE-LINE:* Having cash allows us to provide you with pre-purchased skip-the-line tickets, saving you significant time at the gate.
+- *E-TICKET:* Please keep your booking e-ticket handy to verify tour details.
+
+Wishing you a great day!
+
+Kind Regards,
+{{sender}}`},
+  ]},
+  {id:uid(), name:"Buluşma Detayları", en:"Meeting Details", open:true, templates:[
+    {id:uid(), title:"Meeting Details (general)", tag:"BULUŞMA", subject:"Meeting Details for Your Ephesus Tour", showImage:true, body:
+`*MEETING DETAILS FOR YOUR EPHESUS TOUR*
+
+We are excited to welcome you to Kuşadası/Ephesus! To ensure a smooth start to your day, please review & confirm the following details:
+
+*ARRIVAL INFO:* Your ship ({{ship}}) is scheduled to dock at {{dock}} at the Kusadasi Cruise Port.
+*MEETING TIME:* Please meet us in *30 to 45 minutes after docking*, between *{{meet_start}} and {{meet_end}}*.
+*LIVE TRACKING:* Our team monitors your ship via radar and will be ready at the port before you dock.
+
+*DRESS-CODE:* Comfortable Walking Shoes & Cloths.
+
+📍 {{where}}
+
+📢 *IMPORTANT NOTE:*
+Please have your e-ticket ready with you (printed or on your phone) to review your tour schedule and inclusions.
+Wishing you a fantastic day!
+
+Regards,
+{{sender}}`},
+  ]},
+  {id:uid(), name:"Tur Sonu", en:"Post-Tour", open:true, templates:[
+    {id:uid(), title:"Thank You & Feedback", tag:"TUR SONU", subject:"Thank You from Private & Group Ephesus Tours", showImage:false, body:
+`Thank you for choosing us for your journey through the ancient city of Ephesus today! It was a true pleasure to have you with us, and we hope you've captured memories that will last a lifetime.
+
+Our goal is to provide a seamless and inspiring experience. To help us maintain our high standards, we would be honored if you could share your feedback with us. Did you enjoy with your guide, driver, and tour bus?
+
+Should you have any questions, need recommendations for the rest of your trip, or encounter any issues with your purchase made along with the tour, please do not hesitate to reach out in the future. We are committed to making your entire vacation as smooth as possible.
+
+How to reach us:
+·      WhatsApp: {{whatsapp}}
+·      Email: {{email}}
+
+Wishing you a fantastic and safe journey ahead!
+
+Warm Regards,
+Operation Team`},
+  ]},
+  {id:uid(), name:"İptal", en:"Cancellation", open:true, templates:[
+    {id:uid(), title:"Booking Cancelled", tag:"İPTAL", subject:"Regarding Your Ephesus Tour Booking", showImage:false, body:
+`Dear {{name}},
+
+We had arranged one of our top guides and a premium minivan in preparation for your upcoming tour. However, we have just been notified that your booking has been canceled, and it has now been automatically removed from our operational system.
+
+If you are still interested in joining the tour, we would be happy to welcome you, subject to availability. We kindly encourage you to rebook as soon as possible to secure your spot.
+
+Additionally, we would truly appreciate it if you could share the reason behind your cancellation. Your feedback is invaluable in helping us improve our services and enhance the experience for future guests.
+
+Thank you for your time, and we hope to hear from you soon.
+
+Kind Regards,
+{{sender}}`},
+  ]},
+  {id:uid(), name:"Personel · Pick-up", en:"Staff", open:true, templates:[
+    {id:uid(), title:"Personel – Info (detay sonra)", tag:"PERSONEL·INFO", subject:"", showImage:false, body:
+`Merhabalar,
+
+Yarın ({{tomorrow}}) limandan Efes turunuz bulunmaktadır. Tur ile ilgili detaylar gün içinde tarafınıza ayrıca iletilecektir.
+İyi günler dileriz.
+
+{{sender}}  Iglesias Tour – Operasyon`},
+    {id:uid(), title:"Personel – Yılancıburnu + saat", tag:"PERSONEL·YILANCI", subject:"", showImage:false, body:
+`*Merhabalar*,
+
+Yarın *({{tomorrow}})* limandan Efes turunuz bulunmaktadır.
+*{{pickup_time}}'te* yılancı burnu hizasında hazır olmanızı rica ederiz.
+
+Rehberiniz, misafirleri teslim aldıktan sonra sizinle iletişime geçecektir.
+
+İyi günler dileriz.
+
+*Mesajı aldığınızı lütfen kısa bir yanıtla teyit ediniz.*
+
+*{{sender}}* *Iglesias Tour – Operasyon*`},
+    {id:uid(), title:"Personel – Limanda buluşma + saat", tag:"PERSONEL·LİMAN", subject:"", showImage:false, body:
+`*Merhabalar*,
+
+Yarın *({{tomorrow}})* limandan Efes turunuz bulunmaktadır.
+*{{pickup_time}}'te* limanda buluşuyoruz.
+
+İyi günler dileriz.
+
+*Mesajı aldığınızı lütfen kısa bir yanıtla teyit ediniz.*
+
+*{{sender}}* *Iglesias Tour – Operasyon*`},
+  ]},
+];
+
+/* ================= STATE / PERSIST ================= */
+const LS_STORE="kpt_hub_v3", LS_FIELDS="kpt_hub_fields_v3", LS_SCHED="kpt_hub_sched_v1";
+function deepClone(o){return JSON.parse(JSON.stringify(o));}
+function loadImportedSched(){try{const s=localStorage.getItem(LS_SCHED);if(s)return JSON.parse(s);}catch(e){}return {};}
+function buildSchedule(){return Object.assign({},SHIP_SCHEDULE_SEED,loadImportedSched());}
+function loadStore(){
+  let result=null;
+  try{const s=localStorage.getItem(LS_STORE);if(s){const o=JSON.parse(s);
+    result={data:o.data||deepClone(DEFAULT_DATA),ships:o.ships||deepClone(DEFAULT_SHIPS),staff:o.staff||deepClone(DEFAULT_STAFF),settings:Object.assign(deepClone(DEFAULT_SETTINGS),o.settings||{}),timeAuto:Object.assign(deepClone(DEFAULT_TIMEAUTO),o.timeAuto||{})};}
+  }catch(e){}
+  if(!result)result={data:deepClone(DEFAULT_DATA),ships:deepClone(DEFAULT_SHIPS),staff:deepClone(DEFAULT_STAFF),settings:deepClone(DEFAULT_SETTINGS),timeAuto:deepClone(DEFAULT_TIMEAUTO)};
+  DEFAULT_DATA.filter(dc=>(dc.name||"").indexOf("Personel")>=0).forEach(dc=>{if(!result.data.some(c=>(c.name||"").indexOf("Personel")>=0))result.data.push(deepClone(dc));});
+  if(!result.data.some(c=>/Buluşma Detaylar/i.test(c.name||""))){let found=null,fromCat=null;result.data.forEach(c=>c.templates.forEach(t=>{if(/Meeting Details/i.test(t.title||"")){found=t;fromCat=c;}}));if(found&&fromCat){fromCat.templates=fromCat.templates.filter(t=>t!==found);const i=result.data.indexOf(fromCat);result.data.splice(i+1,0,{id:uid(),name:"Buluşma Detayları",en:"Meeting Details",open:true,templates:[found]});}}
+  return result;
+}
+function loadFields(){try{const s=localStorage.getItem(LS_FIELDS);if(s)return JSON.parse(s);}catch(e){}return {};}
+const store=loadStore();
+const state={data:store.data,ships:store.ships,staff:store.staff,settings:store.settings,timeAuto:store.timeAuto,fields:loadFields(),active:null,search:"",outputText:"",schedule:buildSchedule()};
+function saveStore(){try{localStorage.setItem(LS_STORE,JSON.stringify({data:state.data,ships:state.ships,staff:state.staff,settings:state.settings,timeAuto:state.timeAuto}));}catch(e){alert("Kaydedilemedi — görseller çok büyük olabilir.");}}
+function saveFields(){try{localStorage.setItem(LS_FIELDS,JSON.stringify(state.fields));}catch(e){}}
+
+/* ================= HELPERS ================= */
+const $=s=>document.querySelector(s), $$=s=>Array.from(document.querySelectorAll(s));
+function esc(s){return (s||"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
+function findTpl(catId,tplId){const c=state.data.find(c=>c.id===catId);if(!c)return null;const t=c.templates.find(t=>t.id===tplId);return t?{cat:c,tpl:t}:null;}
+function placeholdersIn(b){const set=[],re=/\{\{(\w+)\}\}/g;let m;while((m=re.exec(b))){if(!set.includes(m[1]))set.push(m[1]);}return set;}
+function todayISO(){const t=new Date();return t.getFullYear()+"-"+String(t.getMonth()+1).padStart(2,"0")+"-"+String(t.getDate()).padStart(2,"0");}
+
+function resolveField(k){
+  if(k==="where"){return state.fields.meetpoint==="starbucks"?state.settings.whereStarbucks:state.settings.whereExit;}
+  if(k==="tomorrow"){const t=new Date();t.setDate(t.getDate()+1);return String(t.getDate()).padStart(2,"0")+"/"+String(t.getMonth()+1).padStart(2,"0")+"/"+t.getFullYear();}
+  if(k==="name"){const fn=(state.fields.name||"").trim();return fn?fn.split(/\s+/)[0]:null;}
+  const fv=state.fields[k];
+  if(fv!==undefined&&String(fv).trim()!=="")return fv;
+  const s=state.settings;
+  const map={company:s.company,whatsapp:s.whatsapp,email:s.email,website:s.website,sender:(state.fields.sender||s.defaultSender)};
+  if(map[k]!==undefined&&map[k]!==null&&String(map[k]).trim()!=="")return map[k];
+  return null;
+}
+function fillBody(b){return b.replace(/\{\{(\w+)\}\}/g,(m,k)=>{const v=resolveField(k);return v!==null?v:m;});}
+
+/* ----- time engine ----- */
+function parseTime(str){if(!str)return null;str=String(str);const ap=(str.match(/([ap])\.?m/i)||[])[1];const t=str.match(/(\d{1,2})(?::(\d{2}))?/);if(!t)return null;let h=parseInt(t[1],10),mi=t[2]?parseInt(t[2],10):0;if(h>23||mi>59)return null;if(ap){const low=ap.toLowerCase();if(low==="p"&&h<12)h+=12;if(low==="a"&&h===12)h=0;}return h*60+mi;}
+function fmtTime(mins){mins=((mins%1440)+1440)%1440;let h=Math.floor(mins/60),mi=mins%60;const ap=h<12?"AM":"PM";let h12=h%12;if(h12===0)h12=12;return String(h12).padStart(2,"0")+":"+String(mi).padStart(2,"0")+" "+ap;}
+function recomputeMeeting(){const ta=state.timeAuto;if(!ta.on)return;const base=ta.base==="early_dock"?state.fields.early_dock:state.fields.dock;const m=parseTime(base);if(m===null)return;state.fields.meet_start=fmtTime(m+(+ta.gapStart||0));state.fields.meet_end=fmtTime(m+(+ta.gapEnd||0));const a=$("#f_meet_start"),b=$("#f_meet_end");if(a)a.value=state.fields.meet_start;if(b)b.value=state.fields.meet_end;saveFields();}
+
+/* ================= RAIL ================= */
+function renderRail(){
+  const list=$("#catList"); list.innerHTML="";
+  const q=state.search.trim().toLowerCase();
+  state.data.forEach(cat=>{
+    const matched=cat.templates.filter(t=>!q||(t.title+" "+t.body).toLowerCase().includes(q));
+    if(q&&matched.length===0)return;
+    const collapsed=(cat.open===false)&&!q;
+    const catEl=document.createElement("div"); catEl.className="cat";
+    catEl.innerHTML=`<div class="cat-head ${collapsed?"collapsed":""}"><span class="tw">▾</span><b>${esc(cat.name)}</b><span class="count">${matched.length}</span><span class="gear">⋯</span></div><div class="tpl-list" ${collapsed?'style="display:none"':''}></div>`;
+    const tl=catEl.querySelector(".tpl-list");
+    matched.forEach(t=>{
+      const active=state.active&&state.active.tplId===t.id;
+      const el=document.createElement("div"); el.className="tpl"+(active?" active":"");
+      el.innerHTML=`<div class="t">${esc(t.title)} ${t.showImage?'<span class="cam" title="görsel ekli">📷</span>':''} ${t.tag?`<span class="tag">${esc(t.tag)}</span>`:""}</div>`;
+      el.addEventListener("click",()=>selectTemplate(cat.id,t.id));
+      tl.appendChild(el);
+    });
+    catEl.querySelector(".cat-head").addEventListener("click",e=>{if(e.target.classList.contains("gear")){e.stopPropagation();categoryMenu(cat);return;}cat.open=!(cat.open!==false);saveStore();renderRail();});
+    list.appendChild(catEl);
+  });
+  if(list.innerHTML==="")list.innerHTML=`<div class="muted-note" style="padding:14px;text-align:center;color:rgba(255,255,255,.55)">Sonuç yok</div>`;
+}
+
+/* ================= EDITOR ================= */
+function selectTemplate(catId,tplId){state.active={catId,tplId};const ref=findTpl(catId,tplId);if(!ref)return;state.outputText=fillBody(ref.tpl.body);renderEditor();renderRail();}
+
+function fieldsCardHTML(phs){
+  const has=k=>phs.includes(k);
+  let rows="";
+  if(has("name")) rows+=`<div class="fld full"><label>Müşteri · Customer (ad soyad)</label><input id="f_name" value="${esc(state.fields.name||"")}" placeholder="Ray Wright"><div class="hint2">Mesajda yalnızca ilk isim · kişiye tam ad kaydedilir</div></div>`;
+  if(has("date")||has("ship")) rows+=`<div class="fld${has("ship")?"":" full"}"><label>${has("ship")?"Sefer tarihi · Date":"Tarih · Date"}</label><input type="date" id="calDate"></div>`;
+  if(has("ship")){
+    rows+=`<div class="fld"><label>Yanaşma · Dock</label><input id="f_dock" value="${esc(state.fields.dock||"")}" placeholder="9:00 AM"></div>`;
+    rows+=`<div class="fld full"><label>Gemi · Ship <button class="ship-mini" id="saveShipBtn" title="Bu gemiyi kaydet" style="float:right">＋ kaydet</button></label><div class="cal-ships" id="calShips"></div><input id="f_ship" list="shipList" value="${esc(state.fields.ship||"")}" placeholder="Oosterdam"></div>`;
+  }
+  if(has("early_dock")) rows+=`<div class="fld"><label>Erken yanaşma · Early dock</label><input id="f_early_dock" value="${esc(state.fields.early_dock||"")}" placeholder="8:30 AM"></div>`;
+  if(has("meet_start")||has("meet_end")){
+    const baseRow=has("early_dock")?`<div class="baserow">Hesap bazı: <label><input type="radio" name="tbase" value="dock"> Yanaşma</label><label><input type="radio" name="tbase" value="early_dock"> Erken</label></div>`:"";
+    rows+=`<div class="fld full"><label>Buluşma · Meeting <span class="meta">otomatik +${state.timeAuto.gapStart}/${state.timeAuto.gapEnd} dk</span></label>
+      <div class="meetrow"><input id="f_meet_start" placeholder="09:30 AM"><span class="dash">–</span><input id="f_meet_end" placeholder="09:45 AM"><label class="autochk"><input type="checkbox" id="timeAutoOn"> otomatik</label></div>${baseRow}</div>`;
+  }
+  if(has("where")){
+    const mp=state.fields.meetpoint==="starbucks"?"starbucks":"exit";
+    rows+=`<div class="fld full"><label>📍 Buluşma noktası · Meeting point</label><div class="seg-wrap"><button class="seg ${mp==="exit"?"on":""}" data-mp="exit">Çıkış Kapısı</button><button class="seg ${mp==="starbucks"?"on":""}" data-mp="starbucks">☕ Starbucks</button></div></div>`;
+  }
+  if(has("pickup_time")) rows+=`<div class="fld"><label>⏰ Personel saati · Pickup time</label><input id="f_pickup_time" value="${esc(state.fields.pickup_time||"")}" placeholder="06:45"></div>`;
+  if(has("tomorrow")) rows+=`<div class="fld full"><label>Tarih · Date</label><div class="info-chip">📅 Yarın (otomatik): <b style="margin-left:4px">${resolveField("tomorrow")}</b></div></div>`;
+  if(has("sender")) rows+=`<div class="fld"><label>Gönderen · Sender</label><input id="f_sender" value="${esc(state.fields.sender||"")}" placeholder="${esc(state.settings.defaultSender||"Yusuf")}"></div>`;
+  if(!rows) return "";
+  return `<div class="card"><div class="card-lab">⌨ Bu iş için gerekenler · Fields for this task</div><div class="fgrid">${rows}</div></div>`;
+}
+
+function renderEditor(){
+  const ref=state.active&&findTpl(state.active.catId,state.active.tplId);
+  if(!ref){$("#edEmpty").style.display="block";$("#edContent").style.display="none";return;}
+  $("#edEmpty").style.display="none";
+  const c=$("#edContent"); c.style.display="block";
+  const tpl=ref.tpl, phs=placeholdersIn(tpl.body);
+  const isStaff=/Personel/i.test(ref.cat.name);
+  const showImg=tpl.showImage, hasImg=!!state.settings.meetingImage;
+  let photoHTML="";
+  if(showImg&&hasImg){
+    photoHTML=`<div class="photo-panel"><img class="thumb" id="ppThumb" src="${state.settings.meetingImage}" alt="meeting point">
+      <div style="flex:1"><div class="pp-step">1. ÖNCE BU FOTOĞRAFI GÖNDER</div><div class="pp-title">📍 Buluşma Noktası Görseli</div><div class="pp-note">Mesajdan <b>önce</b> bu görseli gönder, ardından metni.</div>
+      <div class="pp-actions"><button class="btn accent sm" id="ppDownload">⬇ İndir</button><button class="btn ghost sm" id="ppCopyImg">📋 Resmi Kopyala</button><button class="btn ghost sm" id="ppView">🔍 Büyüt</button></div></div></div>`;
+  } else if(showImg&&!hasImg){
+    photoHTML=`<div class="photo-empty"><span style="font-size:24px">📷</span><div style="flex:1">Bu şablon önce <b>buluşma noktası fotoğrafı</b> ister. Bir kez yükle, hep dursun.</div><button class="btn accent sm" id="ppUpload">⬆ Yükle</button></div>`;
+  }
+  const ch=state.settings.sendChannel==="imessage"?"imessage":"whatsapp";
+  c.innerHTML=`
+    <div class="ed-head"><h1>${esc(tpl.title)}</h1><button class="btn ghost sm" id="edEdit">✎ Düzenle</button></div>
+    <p class="ed-sub">${esc(ref.cat.name)}${ref.cat.en?" · "+esc(ref.cat.en):""}</p>
+    ${fieldsCardHTML(phs)}
+    ${photoHTML}
+    <div class="missing" id="missing"></div>
+    <div class="msg-lab">${showImg&&hasImg?"2. ":""}✉️ Mesaj · Message <span style="font-weight:500;text-transform:none;letter-spacing:0">— göndermeden önce elle düzenleyebilirsin</span></div>
+    <div class="fmt-bar">
+      <button type="button" class="fmt-btn" id="fmtBold" title="Seçili yazıyı kalın yap — WhatsApp'ta da kalın görünür"><b>B</b> Kalın</button>
+      <button type="button" class="fmt-btn" id="fmtNote" title="Sadece sana görünen kırmızı not — müşteriye gönderilmez"><span class="dot"></span> Kırmızı not</button>
+      <span class="fmt-hint">Yazıyı seç → düğmeye bas</span>
+    </div>
+    <textarea class="output" id="output" spellcheck="false"></textarea>
+    <div class="hint">💡 Kutuları doldurdukça metin otomatik dolar. <code>*yıldız*</code> = kalın · <code>~~tilde~~</code> = kırmızı not (gönderilmez).</div>
+    <div class="msg-preview-lab">👁 Önizleme — biçimli görünüm · kırmızı notlar <b>gönderilmez</b></div>
+    <div class="msg-preview" id="msgPrev"></div>
+    <div class="send-row">
+      ${isStaff?`<label>👥 Personel seç · Pick staff</label><div class="staff-pick" id="staffPick">${state.staff.length?state.staff.map((p,i)=>`<button class="shipchip" data-i="${i}">${esc(p.name)}${p.role?` · ${esc(p.role)}`:""}</button>`).join(""):'<span class="muted-note">Personel yok — soldan 👥 Personel ile ekle</span>'}</div>`:""}
+      <label>📱 Telefon · Phone — WhatsApp / iMessage (ülke koduyla)</label><input id="custPhone" value="${esc(state.fields.custPhone||"")}" placeholder="+1 555 123 4567"></div>
+    <div class="actions">
+      <div class="send-split">
+        <button class="send-main ${ch==="imessage"?"imsg":""}" id="edSendMain">${ch==="imessage"?'💬 Gönder · iMessage':'💬 Gönder · WhatsApp'}</button>
+        <button class="send-caret ${ch==="imessage"?"imsg":""}" id="edSendCaret">▾</button>
+        <div class="send-menu" id="sendMenu">
+          <button data-ch="whatsapp">💬 WhatsApp'tan gönder</button>
+          <button data-ch="imessage">💬 iMessage'dan gönder</button>
+        </div>
+      </div>
+      ${has(phs,"name")?'<button class="btn ghost" id="edContact">👤 Kişiye kaydet</button>':''}
+      <button class="btn ghost" id="edCopy">📋 Kopyala <span class="sub">düz</span></button>
+      <button class="btn ghost" id="edCopyWa">⧉ WhatsApp kopya</button>
+      <button class="btn ghost" id="edRefill">↻ Yenile</button>
+    </div>`;
+
+  const out=$("#output"); out.value=state.outputText;
+  const updPrev=()=>{const p=$("#msgPrev");if(p)p.innerHTML=renderRich(out.value);};
+  out.addEventListener("input",()=>{state.outputText=out.value;updPrev();});
+  updPrev();
+  const fb=$("#fmtBold");if(fb)fb.addEventListener("click",()=>wrapSel(out,"*","*"));
+  const fn=$("#fmtNote");if(fn)fn.addEventListener("click",()=>wrapSel(out,"~~","~~"));
+  bindFields(phs);
+
+  $("#custPhone").addEventListener("input",e=>{state.fields.custPhone=e.target.value;saveFields();});
+  $$('#staffPick .shipchip').forEach(b=>b.addEventListener("click",()=>{const p=state.staff[+b.dataset.i];if(!p.phone){alert(p.name+" için telefon yok — soldan 👥 Personel ile ekle.");return;}state.fields.custPhone=p.phone;saveFields();const ph=$("#custPhone");if(ph)ph.value=p.phone;$$('#staffPick .shipchip').forEach(x=>x.classList.remove("on"));b.classList.add("on");}));
+  $("#edEdit").addEventListener("click",()=>openModal("edit",ref.cat.id,tpl.id));
+  $("#edCopy").addEventListener("click",()=>copyText(forPlain(out.value)));
+  $("#edCopyWa").addEventListener("click",()=>copyText(forWa(out.value)));
+  $("#edRefill").addEventListener("click",()=>regenOutput(true));
+  const ce=$("#edContact"); if(ce) ce.addEventListener("click",saveContact);
+  $("#edSendMain").addEventListener("click",()=>doSend(state.settings.sendChannel,out.value));
+  $("#edSendCaret").addEventListener("click",e=>{e.stopPropagation();$("#sendMenu").classList.toggle("show");});
+  $$("#sendMenu button").forEach(b=>b.addEventListener("click",()=>{state.settings.sendChannel=b.dataset.ch;saveStore();$("#sendMenu").classList.remove("show");renderEditor();doSend(b.dataset.ch,$("#output").value);}));
+
+  if(showImg&&hasImg){
+    $("#ppDownload").addEventListener("click",()=>downloadImage(state.settings.meetingImage));
+    $("#ppCopyImg").addEventListener("click",()=>copyImage(state.settings.meetingImage));
+    $("#ppView").addEventListener("click",()=>openLightbox(state.settings.meetingImage));
+    $("#ppThumb").addEventListener("click",()=>openLightbox(state.settings.meetingImage));
+  } else if(showImg&&!hasImg){ $("#ppUpload").addEventListener("click",()=>{openSettings();setTimeout(()=>$("#sMeetUp").click(),200);}); }
+  updateMissing();
+}
+function has(arr,k){return arr.includes(k);}
+
+function bindFields(phs){
+  const h=k=>phs.includes(k);
+  if(h("name")){const i=$("#f_name");i.addEventListener("input",()=>{state.fields.name=i.value;saveFields();regenOutput();updateMissing();});}
+  if(h("date")||h("ship")){const cd=$("#calDate");if(cd){cd.value=state.fields.dateISO||todayISO();cd.addEventListener("change",onCalDate);if(!state.fields.dateISO&&h("date"))onCalDate();}}
+  if(h("ship")){
+    const si=$("#f_ship");si.addEventListener("input",()=>{state.fields.ship=si.value;saveFields();onShipChange(si.value);regenOutput();updateMissing();});
+    const di=$("#f_dock");di.addEventListener("input",()=>{state.fields.dock=di.value;saveFields();recomputeMeeting();regenOutput();updateMissing();});
+    const sb=$("#saveShipBtn");if(sb)sb.addEventListener("click",e=>{e.preventDefault();saveCurrentShip();});
+    rebuildShipList();renderCalShips();
+  }
+  if(h("early_dock")){const i=$("#f_early_dock");i.addEventListener("input",()=>{state.fields.early_dock=i.value;saveFields();recomputeMeeting();regenOutput();updateMissing();});}
+  if(h("meet_start")||h("meet_end")){
+    const a=$("#f_meet_start"),b=$("#f_meet_end");
+    [a,b].forEach(inp=>inp&&inp.addEventListener("input",()=>{state.fields.meet_start=a.value;state.fields.meet_end=b.value;saveFields();regenOutput();updateMissing();}));
+    const t=$("#timeAutoOn");if(t){t.checked=state.timeAuto.on;t.addEventListener("change",()=>{state.timeAuto.on=t.checked;saveStore();refreshAutoLock();recomputeMeeting();regenOutput();updateMissing();});}
+    $$('input[name=tbase]').forEach(r=>{r.checked=(r.value===state.timeAuto.base);r.addEventListener("change",()=>{state.timeAuto.base=document.querySelector('input[name=tbase]:checked').value;saveStore();recomputeMeeting();regenOutput();});});
+    refreshAutoLock();recomputeMeeting();
+  }
+  if(h("where")){$$('.seg[data-mp]').forEach(bn=>bn.addEventListener("click",()=>{state.fields.meetpoint=bn.dataset.mp;saveFields();$$('.seg[data-mp]').forEach(x=>x.classList.toggle("on",x.dataset.mp===bn.dataset.mp));regenOutput();}));}
+  if(h("pickup_time")){const i=$("#f_pickup_time");i.addEventListener("input",()=>{state.fields.pickup_time=i.value;saveFields();regenOutput();updateMissing();});}
+  if(h("sender")){const i=$("#f_sender");i.addEventListener("input",()=>{state.fields.sender=i.value;saveFields();regenOutput();updateMissing();});}
+}
+function refreshAutoLock(){const on=state.timeAuto.on;["meet_start","meet_end"].forEach(k=>{const inp=$("#f_"+k);if(inp){inp.disabled=on;inp.value=state.fields[k]||"";}});}
+function flashField(key){const el=$("#f_"+key);if(el){el.focus();el.style.boxShadow="0 0 0 3px var(--accent-l)";setTimeout(()=>el.style.boxShadow="",900);}else if(key==="meet_start"||key==="meet_end"){const t=$("#timeAutoOn");if(t)t.focus();}}
+
+function onShipChange(val){const s=state.ships.find(s=>s.name.toLowerCase()===String(val).trim().toLowerCase());if(s&&s.dock){state.fields.dock=s.dock;const di=$("#f_dock");if(di)di.value=s.dock;saveFields();recomputeMeeting();}}
+function saveCurrentShip(){const name=(state.fields.ship||"").trim();if(!name){alert("Önce gemi adını yaz");return;}const dock=(state.fields.dock||"").trim();const ex=state.ships.find(s=>s.name.toLowerCase()===name.toLowerCase());if(ex){ex.dock=dock||ex.dock;}else{state.ships.push({id:uid(),name,line:"",dock});}saveStore();rebuildShipList();showCopied("Gemi kaydedildi ✓");}
+function rebuildShipList(){const dl=$("#shipList");if(!dl)return;dl.innerHTML="";state.ships.forEach(s=>{const o=document.createElement("option");o.value=s.name;o.label=s.dock||"";dl.appendChild(o);});}
+
+function regenOutput(){const ref=state.active&&findTpl(state.active.catId,state.active.tplId);if(!ref)return;state.outputText=fillBody(ref.tpl.body);const out=$("#output");if(out)out.value=state.outputText;const p=$("#msgPrev");if(p)p.innerHTML=renderRich(state.outputText);}
+function updateMissing(){
+  const box=$("#missing");if(!box)return;
+  const ref=state.active&&findTpl(state.active.catId,state.active.tplId);if(!ref){box.innerHTML="";return;}
+  const miss=placeholdersIn(ref.tpl.body).filter(k=>resolveField(k)===null);
+  if(miss.length===0){box.innerHTML=`<span class="lab" style="color:var(--ok)">✓ Tüm alanlar dolu</span>`;return;}
+  box.innerHTML=`<span class="lab">Eksik:</span>`+miss.map(k=>{const f=FIELD_LABEL[k];const lbl=f?f.tr:k;return `<span class="chip" data-k="${k}">⚠ ${esc(lbl)}</span>`;}).join("");
+  box.querySelectorAll(".chip").forEach(ch=>ch.addEventListener("click",()=>flashField(ch.dataset.k)));
+}
+
+/* ================= SEND / CONTACT ================= */
+/* ---- formatting: *bold* sent to WhatsApp; ~~red note~~ never sent ---- */
+function cleanNotes(t){return (t||"").replace(/\n[ \t]*~~[^]*?~~[ \t]*(?=\n)/g,"").replace(/~~[^]*?~~/g,"").replace(/[ \t]+\n/g,"\n").replace(/\n{3,}/g,"\n\n").replace(/[ \t]{2,}/g," ").replace(/^\n+/,"").trimEnd();}
+function forWa(t){return cleanNotes(t);}              /* keep *bold* for WhatsApp */
+function forPlain(t){return cleanNotes(t).replace(/\*/g,"");}  /* strip * for SMS / platforms */
+function stripWa(t){return forPlain(t);}
+function renderRich(t){let h=esc(t);h=h.replace(/~~([^]*?)~~/g,'<span class="rednote">$1</span>');h=h.replace(/\*([^*\n]+?)\*/g,'<strong>$1</strong>');h=h.replace(/\n/g,"<br>");return h;}
+function wrapSel(ta,b,a){if(!ta)return;const s=ta.selectionStart,e=ta.selectionEnd;const sel=ta.value.slice(s,e);const inner=sel||(b==="~~"?"not":"metin");ta.value=ta.value.slice(0,s)+b+inner+a+ta.value.slice(e);const ns=s+b.length,ne=ns+inner.length;ta.focus();ta.setSelectionRange(ns,ne);ta.dispatchEvent(new Event("input"));}
+function sanitizePhone(p){return (p||"").replace(/[^\d]/g,"");}
+function doSend(channel,text){ if(channel==="imessage") sendIMessage(forPlain(text)); else sendWhatsApp(forWa(text)); }
+function sendWhatsApp(text){
+  const phone=sanitizePhone(state.fields.custPhone);
+  let url;
+  if(state.settings.whatsappMode==="app"){ url="whatsapp://send?"+(phone?"phone="+phone+"&":"")+"text="+encodeURIComponent(text); }
+  else { url="https://web.whatsapp.com/send?"+(phone?"phone="+phone+"&":"")+"text="+encodeURIComponent(text); }
+  window.open(url,"_blank");
+}
+function sendIMessage(text){const phone=sanitizePhone(state.fields.custPhone);const to=phone?("+"+phone):"";window.location.href="sms:"+to+"&body="+encodeURIComponent(text);}
+function saveContact(){
+  const full=(state.fields.name||"").trim();
+  const phone=(state.fields.custPhone||"").trim();
+  if(!full){alert("Önce müşteri ad-soyadını gir");return;}
+  const parts=full.split(/\s+/); const first=parts.shift(); const last=parts.join(" ");
+  const vcard=["BEGIN:VCARD","VERSION:3.0","N:"+last+";"+first+";;;","FN:"+full,(phone?"TEL;TYPE=CELL:"+phone:""),"END:VCARD"].filter(Boolean).join("\r\n");
+  const blob=new Blob([vcard],{type:"text/vcard"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=full.replace(/[^\w\s-]/g,"")+".vcf";a.click();URL.revokeObjectURL(a.href);
+  showCopied("Kişi kartı indirildi · aç → Kişiler'e ekle ✓");
+}
+
+/* ================= COPY / IMAGE ================= */
+function copyText(text){const done=()=>showCopied();if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(done).catch(()=>fallbackCopy(text,done));}else fallbackCopy(text,done);}
+function fallbackCopy(text,cb){const ta=document.createElement("textarea");ta.value=text;ta.style.position="fixed";ta.style.opacity="0";document.body.appendChild(ta);ta.focus();ta.select();try{document.execCommand("copy");}catch(e){}document.body.removeChild(ta);cb&&cb();}
+let copiedTimer;
+function showCopied(msg){const f=$("#copiedFlag");f.textContent=msg||"Kopyalandı ✓";f.classList.add("show");clearTimeout(copiedTimer);copiedTimer=setTimeout(()=>f.classList.remove("show"),1600);}
+function downloadImage(dataURL){const a=document.createElement("a");a.href=dataURL;a.download="bulusma-noktasi.jpg";a.click();showCopied("İndirildi ✓");}
+async function copyImage(dataURL){try{const blob=await (await fetch(dataURL)).blob();if(navigator.clipboard&&window.ClipboardItem){await navigator.clipboard.write([new ClipboardItem({[blob.type]:blob})]);showCopied("Resim kopyalandı ✓");return;}throw 0;}catch(e){downloadImage(dataURL);}}
+function openLightbox(src){$("#lightboxImg").src=src;$("#lightbox").classList.add("show");}
+$("#lightbox").addEventListener("click",()=>$("#lightbox").classList.remove("show"));
+function readImage(file,maxW,q,cb){const r=new FileReader();r.onload=()=>{const img=new Image();img.onload=()=>{let w=img.width,h=img.height;if(w>maxW){h=Math.round(h*maxW/w);w=maxW;}const cv=document.createElement("canvas");cv.width=w;cv.height=h;cv.getContext("2d").drawImage(img,0,0,w,h);cb(cv.toDataURL("image/png"));};img.onerror=()=>cb(r.result);img.src=r.result;};r.readAsDataURL(file);}
+
+/* ================= TEMPLATE MODAL ================= */
+let mMode="edit",mCatId=null,mTplId=null;
+function openModal(mode,catId,tplId){
+  mMode=mode;mCatId=catId;mTplId=tplId;
+  const sel=$("#mCat");sel.innerHTML="";state.data.forEach(c=>{const o=document.createElement("option");o.value=c.id;o.textContent=c.name;sel.appendChild(o);});
+  if(mode==="edit"){const ref=findTpl(catId,tplId);$("#modalTitle").textContent="Şablonu Düzenle";$("#mTitle").value=ref.tpl.title;$("#mBody").value=ref.tpl.body;$("#mSubject").value=ref.tpl.subject||"";$("#mShowImage").checked=!!ref.tpl.showImage;sel.value=catId;$("#mDelete").style.display="inline-flex";}
+  else{$("#modalTitle").textContent="Yeni Şablon";$("#mTitle").value="";$("#mBody").value="";$("#mSubject").value="";$("#mShowImage").checked=false;if(catId)sel.value=catId;$("#mDelete").style.display="none";}
+  $("#modal").classList.add("show");setTimeout(()=>$("#mTitle").focus(),50);
+}
+function closeModal(){$("#modal").classList.remove("show");}
+function buildPhBar(){const bar=$("#phBar");bar.innerHTML="";const extra=[{key:"where"},{key:"tomorrow"},{key:"company"},{key:"whatsapp"},{key:"email"},{key:"website"}];FIELDS.concat(extra).forEach(f=>{const b=document.createElement("button");b.className="phb";b.type="button";b.textContent="{{"+f.key+"}}";b.addEventListener("click",()=>insertAtCursor($("#mBody"),"{{"+f.key+"}}"));bar.appendChild(b);});const mb=$("#mBody"),bb=$("#mFmtBold"),nb=$("#mFmtNote");if(bb)bb.onclick=()=>wrapSel(mb,"*","*");if(nb)nb.onclick=()=>wrapSel(mb,"~~","~~");}
+function insertAtCursor(ta,text){const s=ta.selectionStart,e=ta.selectionEnd;ta.value=ta.value.slice(0,s)+text+ta.value.slice(e);ta.selectionStart=ta.selectionEnd=s+text.length;ta.focus();}
+function saveModal(){const title=$("#mTitle").value.trim()||"Untitled",body=$("#mBody").value,subject=$("#mSubject").value.trim(),showImage=$("#mShowImage").checked,catId=$("#mCat").value;
+  if(mMode==="edit"){const ref=findTpl(mCatId,mTplId);ref.tpl.title=title;ref.tpl.body=body;ref.tpl.subject=subject;ref.tpl.showImage=showImage;if(catId!==mCatId){ref.cat.templates=ref.cat.templates.filter(t=>t.id!==mTplId);state.data.find(c=>c.id===catId).templates.push(ref.tpl);state.active={catId,tplId:mTplId};}}
+  else{const nt={id:uid(),title,body,subject,showImage,tag:""};state.data.find(c=>c.id===catId).templates.push(nt);state.active={catId,tplId:nt.id};}
+  saveStore();closeModal();renderRail();renderEditor();}
+function deleteTpl(){if(!confirm("Bu şablon silinsin mi?"))return;const ref=findTpl(mCatId,mTplId);if(!ref)return;ref.cat.templates=ref.cat.templates.filter(t=>t.id!==mTplId);state.active=null;saveStore();closeModal();renderRail();renderEditor();}
+function categoryMenu(cat){const a=prompt(`"${cat.name}"\n\n1 = Yeniden adlandır\n2 = Sil\n(İptal: boş bırak)`,"");if(a==="1"){const nn=prompt("Yeni ad:",cat.name);if(nn&&nn.trim()){cat.name=nn.trim();saveStore();renderRail();}}else if(a==="2"){if(cat.templates.length&&!confirm(`İçinde ${cat.templates.length} şablon var, hepsi silinsin mi?`))return;state.data=state.data.filter(c=>c.id!==cat.id);if(state.active&&state.active.catId===cat.id){state.active=null;renderEditor();}saveStore();renderRail();}}
+function newCategory(){const nn=prompt("Yeni kategori adı:","");if(nn&&nn.trim()){state.data.push({id:uid(),name:nn.trim(),en:"",open:true,templates:[]});saveStore();renderRail();}}
+
+/* ================= SETTINGS ================= */
+function openSettings(){const s=state.settings;
+  $("#sCompany").value=s.company||"";$("#sTagline").value=s.tagline||"";$("#sSender").value=s.defaultSender||"";
+  $("#sWebsite").value=s.website||"";$("#sWhatsapp").value=s.whatsapp||"";$("#sEmail").value=s.email||"";
+  $("#sAccent").value=s.accent||"#21305b";$("#sAccent2").value=s.accent2||"#e0241c";
+  $("#sWhereExit").value=s.whereExit||"";$("#sWhereStarbucks").value=s.whereStarbucks||"";
+  $("#sGapStart").value=state.timeAuto.gapStart;$("#sGapEnd").value=state.timeAuto.gapEnd;
+  $$('input[name=waMode]').forEach(r=>r.checked=(r.value===(s.whatsappMode||"web")));
+  setImgSlot("sLogoPrev","sLogoNone",s.logo);setImgSlot("sMeetPrev","sMeetNone",s.meetingImage);
+  $("#setModal").classList.add("show");
+}
+function setImgSlot(prevId,noneId,src){const p=$("#"+prevId),n=$("#"+noneId);if(src){p.src=src;p.style.display="";n.style.display="none";}else{p.style.display="none";n.style.display="flex";}}
+function closeSettings(){$("#setModal").classList.remove("show");}
+let pendingLogo=undefined,pendingMeet=undefined;
+function saveSettings(){const s=state.settings;
+  s.company=$("#sCompany").value.trim();s.tagline=$("#sTagline").value.trim();s.defaultSender=$("#sSender").value.trim();
+  s.website=$("#sWebsite").value.trim();s.whatsapp=$("#sWhatsapp").value.trim();s.email=$("#sEmail").value.trim();
+  s.accent=$("#sAccent").value;s.accent2=$("#sAccent2").value;s.whereExit=$("#sWhereExit").value;s.whereStarbucks=$("#sWhereStarbucks").value;
+  const wm=document.querySelector('input[name=waMode]:checked');if(wm)s.whatsappMode=wm.value;
+  state.timeAuto.gapStart=+$("#sGapStart").value||0;state.timeAuto.gapEnd=+$("#sGapEnd").value||0;
+  if(pendingLogo!==undefined)s.logo=pendingLogo;if(pendingMeet!==undefined)s.meetingImage=pendingMeet;pendingLogo=undefined;pendingMeet=undefined;
+  saveStore();applyTheme();applyBrand();closeSettings();recomputeMeeting();renderRail();renderEditor();showCopied("Ayarlar kaydedildi ✓");
+}
+function applyTheme(){const s=state.settings,r=document.documentElement.style;r.setProperty("--brand",s.accent);r.setProperty("--brand-d",shade(s.accent,-30));r.setProperty("--brand-l",tint(s.accent,.90));r.setProperty("--accent",s.accent2);r.setProperty("--accent-d",shade(s.accent2,-18));r.setProperty("--accent-l",tint(s.accent2,.88));}
+function emblemSVG(sz){return `<svg width="${sz}" height="${sz}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="50" fill="#121833"/><g fill="#e3b35e"><circle cx="27" cy="30" r="1.3"/><circle cx="71" cy="25" r="1.6"/><circle cx="64" cy="40" r="1"/><circle cx="33" cy="42" r="1"/><circle cx="49" cy="19" r="1.2"/><circle cx="79" cy="45" r="1"/></g><circle cx="58" cy="31" r="11" fill="#d7a24c"/><circle cx="63" cy="27" r="9.4" fill="#121833"/><g stroke="#d7a24c" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M30 61 L50 49 L70 61"/><line x1="35" y1="63" x2="35" y2="79"/><line x1="43" y1="63" x2="43" y2="79"/><line x1="57" y1="63" x2="57" y2="79"/><line x1="65" y1="63" x2="65" y2="79"/><line x1="29" y1="81" x2="71" y2="81"/></g></svg>`;}
+function applyBrand(){const s=state.settings;$("#brandName").textContent=s.company||"Template Hub";$("#brandTag").textContent=s.tagline||"Şablon Merkezi";const lb=$("#logoBadge");if(s.logo){lb.innerHTML=`<img src="${s.logo}" alt="logo">`;}else{lb.innerHTML=emblemSVG(44);}const ea=$("#emptyArt");if(ea)ea.innerHTML=emblemSVG(112);}
+function hexToRgb(h){h=h.replace("#","");if(h.length===3)h=h.split("").map(c=>c+c).join("");const n=parseInt(h,16);return[(n>>16)&255,(n>>8)&255,n&255];}
+function shade(hex,pct){const[r,g,b]=hexToRgb(hex);const f=v=>Math.max(0,Math.min(255,Math.round(v*(1+pct/100))));return `#${[f(r),f(g),f(b)].map(v=>v.toString(16).padStart(2,"0")).join("")}`;}
+function tint(hex,amt){const[r,g,b]=hexToRgb(hex);const f=v=>Math.round(v+(255-v)*amt);return `#${[f(r),f(g),f(b)].map(v=>v.toString(16).padStart(2,"0")).join("")}`;}
+
+/* ================= SHIPS MODAL ================= */
+function openShips(){renderShipRows();$("#shipModal").classList.add("show");}
+function renderShipRows(){const tb=$("#shipRows");tb.innerHTML="";state.ships.forEach(s=>{const tr=document.createElement("tr");tr.innerHTML=`<td><input data-f="name" value="${esc(s.name)}"></td><td><input data-f="line" value="${esc(s.line||"")}"></td><td><input data-f="dock" value="${esc(s.dock||"")}" placeholder="9:00 AM"></td><td><button class="del">🗑</button></td>`;tr.querySelectorAll("input").forEach(inp=>inp.addEventListener("input",()=>{s[inp.dataset.f]=inp.value;}));tr.querySelector(".del").addEventListener("click",()=>{state.ships=state.ships.filter(x=>x.id!==s.id);renderShipRows();});tb.appendChild(tr);});}
+function saveShips(){saveStore();rebuildShipList();$("#shipModal").classList.remove("show");showCopied("Gemiler kaydedildi ✓");}
+/* ---- staff directory ---- */
+function openStaff(){renderStaffRows();$("#staffModal").classList.add("show");}
+function renderStaffRows(){const tb=$("#staffRows");tb.innerHTML="";state.staff.forEach(s=>{const tr=document.createElement("tr");tr.innerHTML=`<td><input data-f="name" value="${esc(s.name)}"></td><td><input data-f="role" value="${esc(s.role||"")}" placeholder="Rehber / Şoför"></td><td><input data-f="phone" value="${esc(s.phone||"")}" placeholder="+90 5..."></td><td><input data-f="code" value="${esc(s.code||"")}"></td><td><button class="del">🗑</button></td>`;tr.querySelectorAll("input").forEach(inp=>inp.addEventListener("input",()=>{s[inp.dataset.f]=inp.value;}));tr.querySelector(".del").addEventListener("click",()=>{state.staff=state.staff.filter(x=>x.id!==s.id);renderStaffRows();});tb.appendChild(tr);});}
+function saveStaff(){saveStore();$("#staffModal").classList.remove("show");renderEditor();showCopied("Personel kaydedildi ✓");}
+function parseVCard(text){const cards=text.replace(/\r\n/g,"\n").split(/BEGIN:VCARD/i).slice(1);const out=[];cards.forEach(block=>{let name="";const fnm=block.match(/\nFN[^:\n]*:(.+)/i);if(fnm)name=fnm[1].trim();if(!name){const nm=block.match(/\nN[^:\n]*:(.+)/i);if(nm){const p=nm[1].split(";");name=((p[1]||"")+" "+(p[0]||"")).trim();}}const telm=block.match(/\nTEL[^:\n]*:(.+)/i);const tel=telm?telm[1].trim():"";if(name)out.push({name,tel});});return out;}
+function importStaffVCard(text){const cards=parseVCard(text);let added=0;cards.forEach(c=>{const low=c.name.toLowerCase();let role="";if(/rehber/.test(low))role="Rehber";else if(/şoför|soför|sofor|şöför|driver/.test(low))role="Şoför";else return;let nm=c.name.replace(/rehber/ig,"").replace(/şoför|soför|sofor|şöför/ig,"").replace(/\s+/g," ").replace(/^[\s\-–·,]+|[\s\-–·,]+$/g,"").trim()||c.name;const phone=c.tel||"";if(state.staff.some(s=>(s.name||"").toLowerCase()===nm.toLowerCase()&&(s.phone||"")===phone))return;state.staff.push({id:uid(),name:nm,role,phone,code:""});added++;});return added;}
+
+/* ================= EXPORT / IMPORT / RESET ================= */
+function exportData(){const blob=new Blob([JSON.stringify({data:state.data,ships:state.ships,staff:state.staff,settings:state.settings,timeAuto:state.timeAuto},null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="sablon-yedek-"+todayISO()+".json";a.click();URL.revokeObjectURL(a.href);}
+function importData(file){const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(Array.isArray(d)){state.data=d;}else{if(d.data)state.data=d.data;if(d.ships)state.ships=d.ships;if(d.staff)state.staff=d.staff;if(d.settings)state.settings=Object.assign(deepClone(DEFAULT_SETTINGS),d.settings);if(d.timeAuto)state.timeAuto=Object.assign(deepClone(DEFAULT_TIMEAUTO),d.timeAuto);}state.active=null;saveStore();applyTheme();applyBrand();renderRail();renderEditor();alert("Yüklendi ✓");}catch(e){alert("Dosya okunamadı");}};r.readAsText(file);}
+function resetData(){if(!confirm("Her şey varsayılana dönecek (şablonlar, gemiler, ayarlar). Emin misin?"))return;state.data=deepClone(DEFAULT_DATA);state.ships=deepClone(DEFAULT_SHIPS);state.staff=deepClone(DEFAULT_STAFF);state.settings=deepClone(DEFAULT_SETTINGS);state.timeAuto=deepClone(DEFAULT_TIMEAUTO);state.active=null;saveStore();applyTheme();applyBrand();renderRail();renderEditor();}
+
+/* ================= SHIP CALENDAR ================= */
+const MON3=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+function fmtDateField(iso){const p=iso.split("-").map(Number);return MON3[p[1]-1]+" "+p[2]+", "+p[0];}
+function renderCalShips(){const box=$("#calShips");if(!box)return;const iso=$("#calDate")?$("#calDate").value:"";if(!iso){box.innerHTML='<span class="muted-note">Tarih seç → o gün limandaki gemiler</span>';return;}const ships=state.schedule[iso]||[];if(!ships.length){box.innerHTML='<span class="muted-note">Bu tarihte kayıt yok — elle gir ya da “📅 Takvim”.</span>';return;}box.innerHTML=ships.map((s,i)=>`<button class="shipchip ${state.fields.ship===s[0]?"on":""}" data-i="${i}">${esc(s[0])}${s[1]?` · ${esc(s[1])}`:""}</button>`).join("");box.querySelectorAll(".shipchip").forEach(b=>b.addEventListener("click",()=>{const s=ships[+b.dataset.i];state.fields.ship=s[0];if(s[1])state.fields.dock=s[1];const si=$("#f_ship"),di=$("#f_dock");if(si)si.value=s[0];if(di&&s[1])di.value=s[1];saveFields();recomputeMeeting();regenOutput();updateMissing();box.querySelectorAll(".shipchip").forEach(x=>x.classList.remove("on"));b.classList.add("on");}));}
+function onCalDate(){const cd=$("#calDate");if(!cd)return;const iso=cd.value;if(iso){state.fields.dateISO=iso;state.fields.date=fmtDateField(iso);saveFields();regenOutput();updateMissing();}renderCalShips();}
+const TR_MON={"OCAK":1,"ŞUBAT":2,"SUBAT":2,"MART":3,"NİSAN":4,"NISAN":4,"MAYIS":5,"HAZİRAN":6,"HAZIRAN":6,"TEMMUZ":7,"AĞUSTOS":8,"AGUSTOS":8,"EYLÜL":9,"EYLUL":9,"EKİM":10,"EKIM":10,"KASIM":11,"ARALIK":12};
+function expandShip(ab){let s=" "+ab.trim().toUpperCase()+" ";[[" MS "," "],[" CLB. "," CELEBRITY "],[" VIK. "," VIKING "],[" SEAB. "," SEABOURN "],[" AZM. "," AZAMARA "],[" COS. "," COSTA "],[" RITZ C. "," RITZ-CARLTON "],[" HAPAG L. "," HAPAG-LLOYD "],[" PRIN."," PRINCESS"],[" OS."," OF THE SEAS"],[" W. E."," WORLD ELEGANCE"]].forEach(([a,b])=>{s=s.split(a).join(b);});return s.replace(/\s+/g," ").trim();}
+function to12h(t){const m=t.match(/(\d{1,2}):(\d{2})/);if(!m)return "";let h=+m[1];const mi=m[2];const ap=h<12?"AM":"PM";let h12=h%12;if(h12===0)h12=12;return h12+":"+mi+" "+ap;}
+function parseTuraText(txt){const out={};let n=0;txt.split(/\n/).forEach(line=>{if(!/KUŞ|KUS\b/i.test(line))return;const parts=line.split(/\s[-–]\s/).map(x=>x.trim()).filter(Boolean);if(parts.length<4)return;const dm=parts[0].match(/(\d{1,2})\s+([A-ZÇĞİÖŞÜa-zçğıöşü]+)\s+(\d{4})/);if(!dm)return;const mon=TR_MON[dm[2].toUpperCase()];if(!mon)return;const iso=dm[3]+"-"+String(mon).padStart(2,"0")+"-"+String(+dm[1]).padStart(2,"0");const ship=expandShip(parts[1]);let dock="";for(let i=2;i<parts.length;i++){if(/^\d{1,2}:\d{2}/.test(parts[i])){dock=to12h(parts[i]);break;}}if(!out[iso])out[iso]=[];if(!out[iso].some(x=>x[0]===ship)){out[iso].push([ship,dock]);n++;}});return {data:out,count:n};}
+function importSchedule(){const {data,count}=parseTuraText($("#schedPaste").value);if(count===0){$("#schedStatus").textContent="Hiç KUŞ. seferi bulunamadı.";return;}const cur=loadImportedSched();Object.keys(data).forEach(k=>{cur[k]=data[k];});try{localStorage.setItem(LS_SCHED,JSON.stringify(cur));}catch(e){alert("Kaydedilemedi.");return;}state.schedule=buildSchedule();$("#schedStatus").textContent=`✓ ${count} sefer / ${Object.keys(data).length} gün eklendi.`;renderCalShips();}
+function resetImportedSchedule(){if(!confirm("İçe aktarılan takvim silinsin mi? (Gömülü Haziran kalır)"))return;try{localStorage.removeItem(LS_SCHED);}catch(e){}state.schedule=buildSchedule();$("#schedStatus").textContent="Sıfırlandı.";renderCalShips();}
+
+/* ================= WIRE UP ================= */
+$("#search").addEventListener("input",e=>{state.search=e.target.value;renderRail();});
+$("#btnNewTpl").addEventListener("click",()=>openModal("new",state.active?state.active.catId:(state.data[0]&&state.data[0].id)));
+$("#btnNewCat").addEventListener("click",newCategory);
+$("#btnExport").addEventListener("click",exportData);
+$("#btnImport").addEventListener("click",()=>$("#importFile").click());
+$("#importFile").addEventListener("change",e=>{if(e.target.files[0])importData(e.target.files[0]);e.target.value="";});
+$("#btnReset").addEventListener("click",resetData);
+$("#modalClose").addEventListener("click",closeModal);$("#mCancel").addEventListener("click",closeModal);
+$("#mSave").addEventListener("click",saveModal);$("#mDelete").addEventListener("click",deleteTpl);
+$("#modal").addEventListener("click",e=>{if(e.target.id==="modal")closeModal();});
+$("#btnSettings").addEventListener("click",openSettings);
+$("#setClose").addEventListener("click",closeSettings);$("#setCancel").addEventListener("click",closeSettings);
+$("#setSave").addEventListener("click",saveSettings);
+$("#setModal").addEventListener("click",e=>{if(e.target.id==="setModal")closeSettings();});
+$("#sLogoUp").addEventListener("click",()=>$("#sLogoFile").click());
+$("#sLogoFile").addEventListener("change",e=>{if(e.target.files[0])readImage(e.target.files[0],400,.92,d=>{pendingLogo=d;setImgSlot("sLogoPrev","sLogoNone",d);});});
+$("#sLogoDel").addEventListener("click",()=>{pendingLogo=null;setImgSlot("sLogoPrev","sLogoNone",null);});
+$("#sMeetUp").addEventListener("click",()=>$("#sMeetFile").click());
+$("#sMeetFile").addEventListener("change",e=>{if(e.target.files[0])readImage(e.target.files[0],1500,.82,d=>{pendingMeet=d;setImgSlot("sMeetPrev","sMeetNone",d);});});
+$("#sMeetDel").addEventListener("click",()=>{pendingMeet=null;setImgSlot("sMeetPrev","sMeetNone",null);});
+$("#sColorReset").addEventListener("click",()=>{$("#sAccent").value="#283561";$("#sAccent2").value="#c8862f";});
+$("#btnShips").addEventListener("click",openShips);
+$("#shipClose").addEventListener("click",()=>$("#shipModal").classList.remove("show"));
+$("#shipCancel").addEventListener("click",()=>{state.ships=loadStore().ships;$("#shipModal").classList.remove("show");});
+$("#shipSave").addEventListener("click",saveShips);
+$("#shipAdd").addEventListener("click",()=>{state.ships.push({id:uid(),name:"New Ship",line:"",dock:""});renderShipRows();});
+$("#shipModal").addEventListener("click",e=>{if(e.target.id==="shipModal")$("#shipModal").classList.remove("show");});
+$("#btnStaff").addEventListener("click",openStaff);
+$("#staffClose").addEventListener("click",()=>$("#staffModal").classList.remove("show"));
+$("#staffCancel").addEventListener("click",()=>{state.staff=loadStore().staff;$("#staffModal").classList.remove("show");});
+$("#staffSave").addEventListener("click",saveStaff);
+$("#staffAdd").addEventListener("click",()=>{state.staff.push({id:uid(),name:"Yeni",role:"",phone:"",code:""});renderStaffRows();});
+$("#staffVcf").addEventListener("click",()=>$("#staffVcfFile").click());
+$("#staffVcfFile").addEventListener("change",e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{const n=importStaffVCard(r.result);renderStaffRows();$("#staffImpStatus").textContent=n?("✓ "+n+" kişi eklendi — Kaydet'e bas"):"Adında Rehber/Şoför geçen kişi yok.";};r.readAsText(f);e.target.value="";});
+$("#staffModal").addEventListener("click",e=>{if(e.target.id==="staffModal")$("#staffModal").classList.remove("show");});
+$("#btnSched").addEventListener("click",()=>{$("#schedStatus").textContent="";$("#schedModal").classList.add("show");});
+$("#schedClose").addEventListener("click",()=>$("#schedModal").classList.remove("show"));
+$("#schedCancel").addEventListener("click",()=>$("#schedModal").classList.remove("show"));
+$("#schedParse").addEventListener("click",importSchedule);
+$("#schedReset").addEventListener("click",resetImportedSchedule);
+$("#schedModal").addEventListener("click",e=>{if(e.target.id==="schedModal")$("#schedModal").classList.remove("show");});
+document.addEventListener("click",e=>{const m=$("#sendMenu");if(m&&m.classList.contains("show")&&!e.target.closest(".send-split"))m.classList.remove("show");});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeModal();closeSettings();$("#shipModal").classList.remove("show");$("#staffModal").classList.remove("show");$("#schedModal").classList.remove("show");$("#lightbox").classList.remove("show");}});
+
+/* ================= INIT ================= */
+applyTheme();applyBrand();buildPhBar();renderRail();renderEditor();
+</script>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){});});}</script>
+</body>
+</html>

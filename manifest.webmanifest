@@ -1,0 +1,17 @@
+{
+  "name": "Şablon Merkezi · Private & Group Ephesus Tours",
+  "short_name": "Şablon Merkezi",
+  "description": "Müşteri & personel mesaj şablonları, gemi takvimi ve hızlı gönderim.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#121833",
+  "theme_color": "#121833",
+  "lang": "tr",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icon-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
